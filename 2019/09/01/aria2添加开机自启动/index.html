@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>aria2添加开机自启动 | Hexo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content>
+    <meta name="description" content="在/etc/rc.local的exit 0前添加一句  aria2c –conf-path=/home/michael/.aria2/aria2.conf -D  另附aria2的配置文件 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657">
+<meta property="og:type" content="article">
+<meta property="og:title" content="aria2添加开机自启动">
+<meta property="og:url" content="https://lingjiehao.github.io/2019/09/01/aria2添加开机自启动/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="在/etc/rc.local的exit 0前添加一句  aria2c –conf-path=/home/michael/.aria2/aria2.conf -D  另附aria2的配置文件 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-07-21T04:04:01.800Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="aria2添加开机自启动">
+<meta name="twitter:description" content="在/etc/rc.local的exit 0前添加一句  aria2c –conf-path=/home/michael/.aria2/aria2.conf -D  另附aria2的配置文件 123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657">
+    
+        <link rel="alternate" type="application/atom+xml" title="Hexo" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Hao Lingjie</h5>
+          <a href="mailto:michael-hao@foxmail.com" title="michael-hao@foxmail.com" class="mail">michael-hao@foxmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lingjiehao" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">aria2添加开机自启动</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">aria2添加开机自启动</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-09-01T03:16:46.000Z" itemprop="datePublished" class="page-time">
+  2019-09-01
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+
+<article id="post-aria2添加开机自启动" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">aria2添加开机自启动</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-09-01 11:16:46" datetime="2019-09-01T03:16:46.000Z" itemprop="datePublished">2019-09-01</time>
+
+            
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>在<code>/etc/rc.local</code>的exit 0前添加一句</p>
+<blockquote>
+<p>aria2c –conf-path=/home/michael/.aria2/aria2.conf -D</p>
+</blockquote>
+<p>另附aria2的配置文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line">dir=/data/_dl</span><br><span class="line">on-download-complete=/conf/on-complete.sh</span><br><span class="line">input-file=/conf/aria2.session</span><br><span class="line">save-session=/conf/aria2.session</span><br><span class="line">rpc-secret=[RPC密码]</span><br><span class="line">log-level=warn</span><br><span class="line">enable-http-pipelining=true</span><br><span class="line">disable-ipv6=true</span><br><span class="line">#允许rpc</span><br><span class="line">enable-rpc=true</span><br><span class="line">#允许所有来源, web界面跨域权限需要</span><br><span class="line">rpc-allow-origin-all=true</span><br><span class="line">#允许非外部访问</span><br><span class="line">rpc-listen-all=true</span><br><span class="line">#RPC端口, 仅当默认端口被占用时修改</span><br><span class="line">rpc-listen-port=6800</span><br><span class="line"></span><br><span class="line">#最大同时下载数(任务数), 路由建议值: 3</span><br><span class="line">max-concurrent-downloads=10</span><br><span class="line">#断点续传</span><br><span class="line">continue=true</span><br><span class="line">#同服务器连接数</span><br><span class="line">max-connection-per-server=10</span><br><span class="line">#最小文件分片大小, 下载线程数上限取决于能分出多少片, 对于小文件重要</span><br><span class="line">min-split-size=10M</span><br><span class="line">#单文件最大线程数, 路由建议值: 5</span><br><span class="line">split=10</span><br><span class="line">#下载速度限制</span><br><span class="line">max-overall-download-limit=0</span><br><span class="line">#单文件速度限制</span><br><span class="line">max-download-limit=0</span><br><span class="line">#上传速度限制</span><br><span class="line">max-overall-upload-limit=0</span><br><span class="line">#单文件速度限制</span><br><span class="line">max-upload-limit=0</span><br><span class="line">#断开速度过慢的连接</span><br><span class="line">#lowest-speed-limit=0</span><br><span class="line">#验证用，需要1.16.1之后的release版本</span><br><span class="line">#referer=*</span><br><span class="line"></span><br><span class="line">#定时保存会话，需要1.16.1之后的release版</span><br><span class="line">save-session-interval=60</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#文件缓存, 使用内置的文件缓存, 如果你不相信Linux内核文件缓存和磁盘内置缓存时使用, 需要1.16及以上版本</span><br><span class="line">#disk-cache=0</span><br><span class="line">#另一种Linux文件缓存方式, 使用前确保您使用的内核支持此选项, 需要1.15及以上版本(?)</span><br><span class="line">#enable-mmap=true</span><br><span class="line">#文件预分配, 能有效降低文件碎片, 提高磁盘性能. 缺点是预分配时间较长</span><br><span class="line">#所需时间 none &lt; falloc ? trunc &lt;&lt; prealloc, falloc和trunc需要文件系统和内核支持</span><br><span class="line">file-allocation=falloc</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">#启用本地节点查找</span><br><span class="line">bt-enable-lpd=true</span><br><span class="line">#添加额外的tracker</span><br><span class="line">#bt-tracker=,…</span><br><span class="line">#单种子最大连接数</span><br><span class="line">#bt-max-peers=55</span><br><span class="line">#强制加密, 防迅雷必备</span><br><span class="line">#bt-require-crypto=true</span><br><span class="line">#当下载的文件是一个种子(以.torrent结尾)时, 自动下载BT</span><br><span class="line">follow-torrent=true</span><br><span class="line">#BT监听端口, 当端口屏蔽时使用</span><br><span class="line">listen-port=53247</span><br><span class="line"></span><br><span class="line">#不确定是否需要，为保险起见，need more test</span><br><span class="line">enable-dht=false</span><br><span class="line">bt-enable-lpd=false</span><br><span class="line">enable-peer-exchange=false</span><br><span class="line">#修改特征</span><br><span class="line">user-agent=uTorrent/2210(25130)</span><br><span class="line">peer-id-prefix=-UT2210-</span><br><span class="line">#修改做种设置, 允许做种</span><br><span class="line">seed-ratio=1</span><br><span class="line">seed-time=5000</span><br><span class="line">#保存会话</span><br><span class="line">force-save=true</span><br><span class="line">bt-hash-check-seed=true</span><br><span class="line">bt-seed-unverified=true</span><br><span class="line">bt-save-metadata=true</span><br></pre></td></tr></table></figure>
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2020-07-21T04:04:01.800Z" itemprop="dateUpdated">2020-07-21 12:04:01</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="https://lingjiehao.github.io">
+            <img src="/img/avatar.jpg" alt="Hao Lingjie">
+            Hao Lingjie
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingjiehao.github.io/2019/09/01/aria2添加开机自启动/&title=《aria2添加开机自启动》 — Hexo&pic=https://lingjiehao.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingjiehao.github.io/2019/09/01/aria2添加开机自启动/&title=《aria2添加开机自启动》 — Hexo&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingjiehao.github.io/2019/09/01/aria2添加开机自启动/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《aria2添加开机自启动》 — Hexo&url=https://lingjiehao.github.io/2019/09/01/aria2添加开机自启动/&via=https://lingjiehao.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingjiehao.github.io/2019/09/01/aria2添加开机自启动/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between flex-row-reverse">
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/08/05/docker/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">docker</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        var id = location.pathname
+        if (location.pathname.length > 50) {
+          id = location.pathname.replace(/\/\d+\/\d+\/\d+\//, '').replace('/', '').substring(0, 50)
+        }
+        const gitalk = new Gitalk({
+          clientID: 'a4b4c51eb30b940ebbe0',
+          clientSecret: 'bfb4f3e7b60a4899380984003ce57c13928587d0',
+          repo: 'gitalk',
+          owner: 'lingjiehao',
+          admin: ['lingjiehao'],
+          id: id,      // Ensure uniqueness and length less than 50
+          title: document.title.split('|')[0],
+          distractionFreeMode: false  // Facebook-like distraction free mode
+        })
+
+        gitalk.render('gitalk-container')
+    </script>
+</section>
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Hao Lingjie &copy; 2015 - 2020</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingjiehao.github.io/2019/09/01/aria2添加开机自启动/&title=《aria2添加开机自启动》 — Hexo&pic=https://lingjiehao.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingjiehao.github.io/2019/09/01/aria2添加开机自启动/&title=《aria2添加开机自启动》 — Hexo&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingjiehao.github.io/2019/09/01/aria2添加开机自启动/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《aria2添加开机自启动》 — Hexo&url=https://lingjiehao.github.io/2019/09/01/aria2添加开机自启动/&via=https://lingjiehao.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingjiehao.github.io/2019/09/01/aria2添加开机自启动/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACpUlEQVR42u3aS27DMAwFwNz/0um2QGD38aPABcarInEljRYSQ/L1ip/3r+f+8/fH8/l+PvL9O2sPHh4e3mDpV4tLPr8a+X651SdfMx4eHt5pXr645OCOJg7Y9+Pfj4aHh4f3TF5yfCdRbh4P4+Hh4f1HXjJl9dpIrhM8PDy8p/F6Qyfp3ck4efC9kGvBw8PDi3l5Fek5fx+p7+Hh4eGNq+q9YtjWLAvj4OHh4R3g5QdujkkaqpIkQjXgvnwTDw8Pb5U3OYirSYT8Mlhr8MLDw8M7wKse4snxPUnj5mWwctIWDw8Pb4m3VeDPg+/kuJ+s4fK3Ah4eHt4Sr3qI91oE8sA32axyMQwPDw/vGC9ZdBLy9oLvyRVSuP3w8PDwxrx5oNwr/C8f/UllDw8PD2+VlxeWcvA8RM7bFC7Xj4eHh3eMN5m+l7CoLr1XVMPDw8M7wZskZPOrYn7cT0poeHh4eLu8eYtVlTRHFrrJ8PDw8L7Cm6RTq+1ZvU3PWxPw8PDwTvDyQHYrpK5eS0lyJEmI4OHh4Z3g9Zqcqq1UeaJh/i0eHh7eOV5eBpskFCZFrGSuP+46PDw8vCVeEpj2UgnJaMkseVsYHh4e3vd51VTppPA/uTzywBoPDw/vBC9Jv1abn3pNAPn/lq8xPDw8vGO8XlicAPLtyFeSX1F4eHh43+fNp5xsTe8qKlwMeHh4eEu86lNNy86TxYXyGB4eHt4qb6s0VU3gVhMfzW/x8PDwDvB6R3/vnV5Zq7pBCzcbHh4eXsDbHbqcLBikkqOLAQ8PD+8YL/+RPw92e1uwnGvBw8PD+yIvObjzUlm+EdU14+Hh4T2Zlxe9khRwPkuz6QoPDw9viVdteKqmbufJ4mZKFw8PD+8Ar/qDf86oFtWO1PTw8PDwOrwfLH0DJ5qa9Q4AAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

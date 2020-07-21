@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Ubuntu查看crontab运行日志 | Hexo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content="crontab,log">
+    <meta name="description" content="修改rsyslog12sudo vim /etc/rsyslog.d/50-default.confcron.*              /var/log/cron.log #将cron前面的注释符去掉  重启rsyslog1sudo  service rsyslog  restart  查看crontab日志1tail -f /var/log/cron.log">
+<meta name="keywords" content="crontab,log">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ubuntu查看crontab运行日志">
+<meta property="og:url" content="https://lingjiehao.github.io/2019/05/22/Ubuntu查看crontab运行日志/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="修改rsyslog12sudo vim /etc/rsyslog.d/50-default.confcron.*              /var/log/cron.log #将cron前面的注释符去掉  重启rsyslog1sudo  service rsyslog  restart  查看crontab日志1tail -f /var/log/cron.log">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-07-21T04:04:01.800Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ubuntu查看crontab运行日志">
+<meta name="twitter:description" content="修改rsyslog12sudo vim /etc/rsyslog.d/50-default.confcron.*              /var/log/cron.log #将cron前面的注释符去掉  重启rsyslog1sudo  service rsyslog  restart  查看crontab日志1tail -f /var/log/cron.log">
+    
+        <link rel="alternate" type="application/atom+xml" title="Hexo" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Hao Lingjie</h5>
+          <a href="mailto:michael-hao@foxmail.com" title="michael-hao@foxmail.com" class="mail">michael-hao@foxmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lingjiehao" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Ubuntu查看crontab运行日志</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Ubuntu查看crontab运行日志</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-05-22T01:39:55.000Z" itemprop="datePublished" class="page-time">
+  2019-05-22
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#修改rsyslog"><span class="post-toc-number">1.</span> <span class="post-toc-text">修改rsyslog</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#重启rsyslog"><span class="post-toc-number">2.</span> <span class="post-toc-text">重启rsyslog</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#查看crontab日志"><span class="post-toc-number">3.</span> <span class="post-toc-text">查看crontab日志</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-Ubuntu查看crontab运行日志" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Ubuntu查看crontab运行日志</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-05-22 09:39:55" datetime="2019-05-22T01:39:55.000Z" itemprop="datePublished">2019-05-22</time>
+
+            
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <h2 id="修改rsyslog"><a href="#修改rsyslog" class="headerlink" title="修改rsyslog"></a>修改rsyslog</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/rsyslog.d/50-default.conf</span><br><span class="line">cron.*              /var/<span class="built_in">log</span>/cron.log <span class="comment">#将cron前面的注释符去掉</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="重启rsyslog"><a href="#重启rsyslog" class="headerlink" title="重启rsyslog"></a>重启rsyslog</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo  service rsyslog  restart</span><br></pre></td></tr></table></figure>
+
+<h2 id="查看crontab日志"><a href="#查看crontab日志" class="headerlink" title="查看crontab日志"></a>查看crontab日志</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tail -f /var/<span class="built_in">log</span>/cron.log</span><br></pre></td></tr></table></figure>
+
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2020-07-21T04:04:01.800Z" itemprop="dateUpdated">2020-07-21 12:04:01</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="https://lingjiehao.github.io">
+            <img src="/img/avatar.jpg" alt="Hao Lingjie">
+            Hao Lingjie
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+	<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/crontab/">crontab</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/log/">log</a></li></ul>
+
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingjiehao.github.io/2019/05/22/Ubuntu查看crontab运行日志/&title=《Ubuntu查看crontab运行日志》 — Hexo&pic=https://lingjiehao.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingjiehao.github.io/2019/05/22/Ubuntu查看crontab运行日志/&title=《Ubuntu查看crontab运行日志》 — Hexo&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingjiehao.github.io/2019/05/22/Ubuntu查看crontab运行日志/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Ubuntu查看crontab运行日志》 — Hexo&url=https://lingjiehao.github.io/2019/05/22/Ubuntu查看crontab运行日志/&via=https://lingjiehao.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingjiehao.github.io/2019/05/22/Ubuntu查看crontab运行日志/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2019/05/23/Ubuntu-KVM搭建/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">Ubuntu KVM搭建</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/05/22/adb获取手机温度/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">adb获取手机温度</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        var id = location.pathname
+        if (location.pathname.length > 50) {
+          id = location.pathname.replace(/\/\d+\/\d+\/\d+\//, '').replace('/', '').substring(0, 50)
+        }
+        const gitalk = new Gitalk({
+          clientID: 'a4b4c51eb30b940ebbe0',
+          clientSecret: 'bfb4f3e7b60a4899380984003ce57c13928587d0',
+          repo: 'gitalk',
+          owner: 'lingjiehao',
+          admin: ['lingjiehao'],
+          id: id,      // Ensure uniqueness and length less than 50
+          title: document.title.split('|')[0],
+          distractionFreeMode: false  // Facebook-like distraction free mode
+        })
+
+        gitalk.render('gitalk-container')
+    </script>
+</section>
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Hao Lingjie &copy; 2015 - 2020</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingjiehao.github.io/2019/05/22/Ubuntu查看crontab运行日志/&title=《Ubuntu查看crontab运行日志》 — Hexo&pic=https://lingjiehao.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingjiehao.github.io/2019/05/22/Ubuntu查看crontab运行日志/&title=《Ubuntu查看crontab运行日志》 — Hexo&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingjiehao.github.io/2019/05/22/Ubuntu查看crontab运行日志/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Ubuntu查看crontab运行日志》 — Hexo&url=https://lingjiehao.github.io/2019/05/22/Ubuntu查看crontab运行日志/&via=https://lingjiehao.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingjiehao.github.io/2019/05/22/Ubuntu查看crontab运行日志/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAN4AAADeCAAAAAB3DOFrAAACsUlEQVR42u3aQXLjMAwEQP//0841qcTyACAcHVqn1EqW2DyQ2AEfj/h6fruu/z158vfzyRdfPXngwsPDwxsM/XoQ15/s3U2+cv2261/h4eHh7fFeraj5q3uDyCcx307w8PDw7sZL7l7/KlrQW+U1Hh4e3j151QCi+ne+heDh4eH9L6/36urgJqHtetaCh4eH16ld33SR7vP3Sn8PDw8Pb9xVz5v9+aI8CWrLo8XDw8Nb4OUL7vx4QS/OmEwfHh4e3gZv3vJPjklNDgpUQ5Afd/Hw8PA+wksGWihnWyX4ZFIeee6Lh4eHN+YlAW4v5L1+Q7WwzgMOPDw8vA1esnxXQ9V8aiawcmMMDw8P7ygvGUT+umpzqxoxlMtrPDw8vAVevhD3toHkw8km0Su48fDw8DZ4eaiaICfHDvKAozD1eHh4eEd5+UJfLamrrazeQas3I8fDw8Nb4E0aS9WSenLIIIkeylkLHh4e3pi3EbbOm2T5REdhBB4eHt4C71RDKwFXp7jZnMPDw8M7yss3g3nB/cn3/5G14OHh4R3i5YcGeqFtdeiTDSZqy+Hh4eEt8yZBbR7m9krnwqErPDw8vAVetbU/KZfzJlaepjQ3Azw8PLwBr1ocT4Ld/Le9A2F4eHh4n+FVS9X8Y5Mnq19/OR14eHh4a7w8UJgU071i/cCOh4eHh7fGqw6rWkxXC/r8Wy/BeHh4eMu8Xqvp1LGtyVZxoKTGw8PDC97zLF55mJsfFMg3knKwi4eHh7fAy69Th6WScrk3KY/JhYeHh9fqreev7jGqIUI+NW/u4uHh4a3xqq2mfPmuHqjqbVpvYlw8PDy8m/F6h6J6oUO5vMbDw8O7AS///Dxs7UXMeHh4eJ/hJfHB5O6oLG49g4eHh7fH6/2Hf7RYX24e1ak/cOHh4eGl7/8CWoZK3wUUEh0AAAAASUVORK5CYII=" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+    
+
+    
+
+    
+
+
+
+    <meta charset="utf-8">
+    
+    
+    
+    
+    <title>Ubuntu 16.04下Android O编译环境的搭建 | Hexo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#3F51B5">
+    
+    
+    <meta name="keywords" content>
+    <meta name="description" content="网上关于安卓编译环境搭建的文章有不少，但质量参差不齐，关于安装哪些软件各有各的说法，这样带来的后果是如果编译出错了，就眉毛胡子一把抓，把所有人说的所有的软件都安装上去，这样有可能带来的问题会更多。 我搭建编译境的时候幸运地在DigitalOcean上找到了一篇详细介绍安卓编译环境搭建的文章,了解DigitalOcean的人都知道他家的文章质量很高，这篇也不例外，我按照文中的方法搭建后，在AOSP8">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ubuntu 16.04下Android O编译环境的搭建">
+<meta property="og:url" content="https://lingjiehao.github.io/2019/05/23/Ubuntu-16-04下Android-O编译环境的搭建/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="网上关于安卓编译环境搭建的文章有不少，但质量参差不齐，关于安装哪些软件各有各的说法，这样带来的后果是如果编译出错了，就眉毛胡子一把抓，把所有人说的所有的软件都安装上去，这样有可能带来的问题会更多。 我搭建编译境的时候幸运地在DigitalOcean上找到了一篇详细介绍安卓编译环境搭建的文章,了解DigitalOcean的人都知道他家的文章质量很高，这篇也不例外，我按照文中的方法搭建后，在AOSP8">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-07-21T04:04:01.800Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ubuntu 16.04下Android O编译环境的搭建">
+<meta name="twitter:description" content="网上关于安卓编译环境搭建的文章有不少，但质量参差不齐，关于安装哪些软件各有各的说法，这样带来的后果是如果编译出错了，就眉毛胡子一把抓，把所有人说的所有的软件都安装上去，这样有可能带来的问题会更多。 我搭建编译境的时候幸运地在DigitalOcean上找到了一篇详细介绍安卓编译环境搭建的文章,了解DigitalOcean的人都知道他家的文章质量很高，这篇也不例外，我按照文中的方法搭建后，在AOSP8">
+    
+        <link rel="alternate" type="application/atom+xml" title="Hexo" href="/atom.xml">
+    
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link rel="stylesheet" href="//unpkg.com/hexo-theme-material-indigo@latest/css/style.css">
+    <script>window.lazyScripts=[]</script>
+
+    <!-- custom head -->
+    
+
+</head>
+
+<body>
+    <div id="loading" class="active"></div>
+
+    <aside id="menu" class="hide">
+  <div class="inner flex-row-vertical">
+    <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menu-off">
+        <i class="icon icon-lg icon-close"></i>
+    </a>
+    <div class="brand-wrap" style="background-image:url(/img/brand.jpg)">
+      <div class="brand">
+        <a href="/" class="avatar waves-effect waves-circle waves-light">
+          <img src="/img/avatar.jpg">
+        </a>
+        <hgroup class="introduce">
+          <h5 class="nickname">Hao Lingjie</h5>
+          <a href="mailto:michael-hao@foxmail.com" title="michael-hao@foxmail.com" class="mail">michael-hao@foxmail.com</a>
+        </hgroup>
+      </div>
+    </div>
+    <div class="scroll-wrap flex-col">
+      <ul class="nav">
+        
+            <li class="waves-block waves-effect">
+              <a href="/">
+                <i class="icon icon-lg icon-home"></i>
+                主页
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/archives">
+                <i class="icon icon-lg icon-archives"></i>
+                Archives
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/tags">
+                <i class="icon icon-lg icon-tags"></i>
+                Tags
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="/categories">
+                <i class="icon icon-lg icon-th-list"></i>
+                Categories
+              </a>
+            </li>
+        
+            <li class="waves-block waves-effect">
+              <a href="https://github.com/lingjiehao" target="_blank">
+                <i class="icon icon-lg icon-github"></i>
+                Github
+              </a>
+            </li>
+        
+      </ul>
+    </div>
+  </div>
+</aside>
+
+    <main id="main">
+        <header class="top-header" id="header">
+    <div class="flex-row">
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
+          <i class="icon icon-lg icon-navicon"></i>
+        </a>
+        <div class="flex-col header-title ellipsis">Ubuntu 16.04下Android O编译环境的搭建</div>
+        
+        <div class="search-wrap" id="search-wrap">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="back">
+                <i class="icon icon-lg icon-chevron-left"></i>
+            </a>
+            <input type="text" id="key" class="search-input" autocomplete="off" placeholder="输入感兴趣的关键字">
+            <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="search">
+                <i class="icon icon-lg icon-search"></i>
+            </a>
+        </div>
+        
+        
+        <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
+            <i class="icon icon-lg icon-share-alt"></i>
+        </a>
+        
+    </div>
+</header>
+<header class="content-header post-header">
+
+    <div class="container fade-scale">
+        <h1 class="title">Ubuntu 16.04下Android O编译环境的搭建</h1>
+        <h5 class="subtitle">
+            
+                <time datetime="2019-05-23T18:45:58.000Z" itemprop="datePublished" class="page-time">
+  2019-05-23
+</time>
+
+
+            
+        </h5>
+    </div>
+
+    
+
+
+</header>
+
+
+<div class="container body-wrap">
+    
+    <aside class="post-widget">
+        <nav class="post-toc-wrap post-toc-shrink" id="post-toc">
+            <h4>TOC</h4>
+            <ol class="post-toc"><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#安装repo"><span class="post-toc-number">1.</span> <span class="post-toc-text">安装repo</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#配置git的email和username"><span class="post-toc-number">2.</span> <span class="post-toc-text">配置git的email和username</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#安装编译所需的软件包"><span class="post-toc-number">3.</span> <span class="post-toc-text">安装编译所需的软件包</span></a></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#使用ccache加快每次重新编译的速度"><span class="post-toc-number">4.</span> <span class="post-toc-text">使用ccache加快每次重新编译的速度</span></a><ol class="post-toc-child"><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#下载ccache"><span class="post-toc-number">4.1.</span> <span class="post-toc-text">下载ccache</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#修改ccache所使用的缓存大小"><span class="post-toc-number">4.2.</span> <span class="post-toc-text">修改ccache所使用的缓存大小</span></a></li><li class="post-toc-item post-toc-level-3"><a class="post-toc-link" href="#添加环境变量"><span class="post-toc-number">4.3.</span> <span class="post-toc-text">添加环境变量</span></a></li></ol></li><li class="post-toc-item post-toc-level-2"><a class="post-toc-link" href="#限制Jack-Server的内存使用"><span class="post-toc-number">5.</span> <span class="post-toc-text">限制Jack Server的内存使用</span></a></li></ol>
+        </nav>
+    </aside>
+
+
+<article id="post-Ubuntu-16-04下Android-O编译环境的搭建" class="post-article article-type-post fade" itemprop="blogPost">
+
+    <div class="post-card">
+        <h1 class="post-card-title">Ubuntu 16.04下Android O编译环境的搭建</h1>
+        <div class="post-meta">
+            <time class="post-time" title="2019-05-24 02:45:58" datetime="2019-05-23T18:45:58.000Z" itemprop="datePublished">2019-05-24</time>
+
+            
+
+
+            
+
+        </div>
+        <div class="post-content" id="post-content" itemprop="postContent">
+            <p>网上关于安卓编译环境搭建的文章有不少，但质量参差不齐，关于安装哪些软件各有各的说法，这样带来的后果是如果编译出错了，就眉毛胡子一把抓，把所有人说的所有的软件都安装上去，这样有可能带来的问题会更多。</p>
+<p>我搭建编译境的时候幸运地在DigitalOcean上找到了一篇详细介绍安卓编译环境搭建的文章,了解DigitalOcean的人都知道他家的文章质量很高，这篇也不例外，我按照文中的方法搭建后，在AOSP8.1以及公司的代码上都是一次编译成功。</p>
+<p>以下是简单的安装记录，详细介绍请参考<a href="https://www.digitalocean.com/community/tutorials/how-to-build-android-roms-on-ubuntu-16-04" target="_blank" rel="noopener">原文</a>。</p>
+<h2 id="安装repo"><a href="#安装repo" class="headerlink" title="安装repo"></a>安装repo</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install repo</span><br></pre></td></tr></table></figure>
+
+<h2 id="配置git的email和username"><a href="#配置git的email和username" class="headerlink" title="配置git的email和username"></a>配置git的email和username</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name "your name"</span><br><span class="line">git config --global user.email "mailto:your_email@your_domain.com"</span><br></pre></td></tr></table></figure>
+
+<h2 id="安装编译所需的软件包"><a href="#安装编译所需的软件包" class="headerlink" title="安装编译所需的软件包"></a>安装编译所需的软件包</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install openjdk-8-jdk android-tools-adb bc bison build-essential curl flex g++-multilib gcc-multilib gnupg gperf imagemagick lib32ncurses5-dev lib32readline-dev lib32z1-dev libesd0-dev liblz4-tool libncurses5-dev libsdl1.2-dev libssl-dev libwxgtk3.0-dev libxml2 libxml2-utils lzop pngcrush rsync schedtool squashfs-tools xsltproc yasm zip zlib1g-dev</span><br></pre></td></tr></table></figure>
+
+<p>上面三步完成后就可以拉代码编译了，关于如何使用repo拉代码，如何编译不再本文讨论的范围内。</p>
+<p><strong>下面两步是独立的且可选的</strong></p>
+<h2 id="使用ccache加快每次重新编译的速度"><a href="#使用ccache加快每次重新编译的速度" class="headerlink" title="使用ccache加快每次重新编译的速度"></a>使用ccache加快每次重新编译的速度</h2><h3 id="下载ccache"><a href="#下载ccache" class="headerlink" title="下载ccache"></a>下载ccache</h3><p>（注：原文中不是使用apt安装ccache的，而是使用源码中自带ccache，我在源码中没找到，所以使用apt安装了ccache）</p>
+<h3 id="修改ccache所使用的缓存大小"><a href="#修改ccache所使用的缓存大小" class="headerlink" title="修改ccache所使用的缓存大小"></a>修改ccache所使用的缓存大小</h3><p>ccache默认使用的缓存最大值为1G，原文推荐修改为15G，你当然可以设置更大的缓存空间，ccache生成的缓存默认位于用户主目录的.ccache目录下。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ccache -M 15G</span><br></pre></td></tr></table></figure>
+
+<h3 id="添加环境变量"><a href="#添加环境变量" class="headerlink" title="添加环境变量"></a>添加环境变量</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export USE_CCACHE=1</span><br></pre></td></tr></table></figure>
+
+<p>为了永久生效，你可以把上面这句话添加到.bashrc中（如果你使用bash的话）。</p>
+<h2 id="限制Jack-Server的内存使用"><a href="#限制Jack-Server的内存使用" class="headerlink" title="限制Jack Server的内存使用"></a>限制Jack Server的内存使用</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export ANDROID_JACK_VM_ARGS="-Xmx8g -Dfile.encoding=UTF-8 -XX:+TieredCompilation"</span><br></pre></td></tr></table></figure>
+
+
+        </div>
+
+        <blockquote class="post-copyright">
+    
+    <div class="content">
+        
+<span class="post-time">
+    最后更新时间：<time datetime="2020-07-21T04:04:01.800Z" itemprop="dateUpdated">2020-07-21 12:04:01</time>
+</span><br>
+
+
+        
+    </div>
+    
+    <footer>
+        <a href="https://lingjiehao.github.io">
+            <img src="/img/avatar.jpg" alt="Hao Lingjie">
+            Hao Lingjie
+        </a>
+    </footer>
+</blockquote>
+
+        
+<div class="page-reward">
+    <a id="rewardBtn" href="javascript:;" class="page-reward-btn waves-effect waves-circle waves-light">赏</a>
+</div>
+
+
+
+        <div class="post-footer">
+            
+
+            
+<div class="page-share-wrap">
+    
+
+<div class="page-share" id="pageShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingjiehao.github.io/2019/05/23/Ubuntu-16-04下Android-O编译环境的搭建/&title=《Ubuntu 16.04下Android O编译环境的搭建》 — Hexo&pic=https://lingjiehao.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingjiehao.github.io/2019/05/23/Ubuntu-16-04下Android-O编译环境的搭建/&title=《Ubuntu 16.04下Android O编译环境的搭建》 — Hexo&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingjiehao.github.io/2019/05/23/Ubuntu-16-04下Android-O编译环境的搭建/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Ubuntu 16.04下Android O编译环境的搭建》 — Hexo&url=https://lingjiehao.github.io/2019/05/23/Ubuntu-16-04下Android-O编译环境的搭建/&via=https://lingjiehao.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingjiehao.github.io/2019/05/23/Ubuntu-16-04下Android-O编译环境的搭建/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+
+    <a href="javascript:;" id="shareFab" class="page-share-fab waves-effect waves-circle">
+        <i class="icon icon-share-alt icon-lg"></i>
+    </a>
+</div>
+
+
+
+        </div>
+    </div>
+
+    
+<nav class="post-nav flex-row flex-justify-between">
+  
+    <div class="waves-block waves-effect prev">
+      <a href="/2019/05/23/test/" id="post-prev" class="post-nav-link">
+        <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
+        <h4 class="title">test</h4>
+      </a>
+    </div>
+  
+
+  
+    <div class="waves-block waves-effect next">
+      <a href="/2019/05/23/vim/" id="post-next" class="post-nav-link">
+        <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
+        <h4 class="title">vim</h4>
+      </a>
+    </div>
+  
+</nav>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<section class="comments" id="comments">
+    <div id="gitalk-container"></div>
+    <link rel="stylesheet" href="https://unpkg.com/gitalk/dist/gitalk.css">
+    <script src="https://unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script>
+        var id = location.pathname
+        if (location.pathname.length > 50) {
+          id = location.pathname.replace(/\/\d+\/\d+\/\d+\//, '').replace('/', '').substring(0, 50)
+        }
+        const gitalk = new Gitalk({
+          clientID: 'a4b4c51eb30b940ebbe0',
+          clientSecret: 'bfb4f3e7b60a4899380984003ce57c13928587d0',
+          repo: 'gitalk',
+          owner: 'lingjiehao',
+          admin: ['lingjiehao'],
+          id: id,      // Ensure uniqueness and length less than 50
+          title: document.title.split('|')[0],
+          distractionFreeMode: false  // Facebook-like distraction free mode
+        })
+
+        gitalk.render('gitalk-container')
+    </script>
+</section>
+
+
+
+
+</article>
+
+<div id="reward" class="page-modal reward-lay">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <h3 class="reward-title">
+        <i class="icon icon-quote-left"></i>
+        谢谢大爷~
+        <i class="icon icon-quote-right"></i>
+    </h3>
+    <div class="reward-content">
+        
+        <div class="reward-code">
+            <img id="rewardCode" src="/img/wechat.jpg" alt="打赏二维码">
+        </div>
+        
+        <label class="reward-toggle">
+            <input id="rewardToggle" type="checkbox" class="reward-toggle-check" data-wechat="/img/wechat.jpg" data-alipay="/img/alipay.jpg">
+            <div class="reward-toggle-ctrol">
+                <span class="reward-toggle-item wechat">微信</span>
+                <span class="reward-toggle-label"></span>
+                <span class="reward-toggle-item alipay">支付宝</span>
+            </div>
+        </label>
+        
+    </div>
+</div>
+
+
+
+</div>
+
+        <footer class="footer">
+    <div class="top">
+        
+
+        <p>
+            
+                <span><a href="/atom.xml" target="_blank" class="rss" title="rss"><i class="icon icon-lg icon-rss"></i></a></span>
+            
+            <span>博客内容遵循 <a rel="license" href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">知识共享 署名 - 非商业性 - 相同方式共享 4.0 国际协议</a></span>
+        </p>
+    </div>
+    <div class="bottom">
+        <p><span>Hao Lingjie &copy; 2015 - 2020</span>
+            <span>
+                
+                Power by <a href="http://hexo.io/" target="_blank">Hexo</a> Theme <a href="https://github.com/yscoder/hexo-theme-indigo" target="_blank">indigo</a>
+            </span>
+        </p>
+    </div>
+</footer>
+
+    </main>
+    <div class="mask" id="mask"></div>
+<a href="javascript:;" id="gotop" class="waves-effect waves-circle waves-light"><span class="icon icon-lg icon-chevron-up"></span></a>
+
+
+
+<div class="global-share" id="globalShare">
+    <ul class="reset share-icons">
+      <li>
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingjiehao.github.io/2019/05/23/Ubuntu-16-04下Android-O编译环境的搭建/&title=《Ubuntu 16.04下Android O编译环境的搭建》 — Hexo&pic=https://lingjiehao.github.io/img/avatar.jpg" data-title="微博">
+          <i class="icon icon-weibo"></i>
+        </a>
+      </li>
+      <li>
+        <a class="weixin share-sns wxFab" href="javascript:;" data-title="微信">
+          <i class="icon icon-weixin"></i>
+        </a>
+      </li>
+      <li>
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingjiehao.github.io/2019/05/23/Ubuntu-16-04下Android-O编译环境的搭建/&title=《Ubuntu 16.04下Android O编译环境的搭建》 — Hexo&source=" data-title=" QQ">
+          <i class="icon icon-qq"></i>
+        </a>
+      </li>
+      <li>
+        <a class="facebook share-sns" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https://lingjiehao.github.io/2019/05/23/Ubuntu-16-04下Android-O编译环境的搭建/" data-title=" Facebook">
+          <i class="icon icon-facebook"></i>
+        </a>
+      </li>
+      <li>
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Ubuntu 16.04下Android O编译环境的搭建》 — Hexo&url=https://lingjiehao.github.io/2019/05/23/Ubuntu-16-04下Android-O编译环境的搭建/&via=https://lingjiehao.github.io" data-title=" Twitter">
+          <i class="icon icon-twitter"></i>
+        </a>
+      </li>
+      <li>
+        <a class="google share-sns" target="_blank" href="https://plus.google.com/share?url=https://lingjiehao.github.io/2019/05/23/Ubuntu-16-04下Android-O编译环境的搭建/" data-title=" Google+">
+          <i class="icon icon-google-plus"></i>
+        </a>
+      </li>
+    </ul>
+ </div>
+
+
+<div class="page-modal wx-share" id="wxShare">
+    <a class="close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPYAAAD2CAAAAADAeSUUAAADM0lEQVR42u3aQXLcMAwEQP//005VTrlodwaUEy3SPG25JJJNHWAA/PqKx/fvcfX7aiTP/Pnk1fOvd/X6maOBjY2N/SHsfOtXi73e+uuDS6j5bPnhYmNjY+9jJ0HrakP5X2bBJjmy3IKNjY39P7Pz/+dn7FmKgo2NjY09C2B58Siv7STpxz+O29jY2NgPZucl/jZJmAWttpHwg7U0bGxs7Mezzxu9z/n9V/vb2NjY2A9gf5djFn5mRahkxaECGxsbexE7b9Ymm85LSO1B5AWpYlfY2NjYK9htISkpD82au21Dt21vYGNjY29l39AuLUPXvdeA2rYBNjY29lb2XcufNHHPWxT15SFsbGzsRex2ouStk+PIj/WGAIyNjY394ey2NXte7n9NbY91+BY2Njb2avZdyUC76aTZnBx9tAo2Njb2InaehOQL5G2DNglJrlQWjWpsbGzsRey7rtG0V3OGl2xGQau+voONjY39IeyTCzH583lozAtSSdpzuTo2Njb2OvYseMwSg5OE5KQljI2Njb2V3bZ4k2Qj39DwblHc3H3zFjY2NvYK9qx8X1SnytJ/Gzjbj4GNjY29lZ0Ua9qRh658rbyVGzV0sbGxsdexZz3htqDfBpvZZ3gTSrGxsbEXsdsCTR4qTsLbSWpU7BYbGxt7BTsPNnkppw0/94Kj/WNjY2OvY8+Sh7Z41BaG2kZyHlaxsbGxN7HvDRuzSzznpah2LWxsbOxN7LZkf3J1JglOyfxJ2/jNrrCxsbEXsWeXJvN42BanZtdxkjLWMBXBxsbGfjz7vE3bpi55KjILitERYGNjYy9it1MnISQ/uNlIjn4Yn7GxsbE/kH1e3E9Sl7ZtnL87+wzY2NjY+9htepAskDcDbkgq2sCMjY2NvY6dj/PA1s48m/NNxoGNjY29iH3XPZbZDG0XOg97J+UzbGxs7E9kt23dvPR/HvxmbeOoLIWNjY29jt0ulv+73wanZK3ZVZ6jyhY2Njb2CnZbxM/Tg/OyUfsBsLGxsbHz7c4CzE8kJzcEMGxsbOwHs8+bu3mAyeeZXSGKWhrY2NjYi9htm7ZtG8ySlpadNzawsbGxF7F/AWhPTwIA5h7QAAAAAElFTkSuQmCC" alt="微信分享二维码">
+</div>
+
+
+
+
+    <script src="//cdn.bootcss.com/node-waves/0.7.4/waves.min.js"></script>
+<script>
+var BLOG = { ROOT: '/', SHARE: true, REWARD: true };
+
+
+</script>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/main.min.js"></script>
+
+
+<div class="search-panel" id="search-panel">
+    <ul class="search-result" id="search-result"></ul>
+</div>
+<template id="search-tpl">
+<li class="item">
+    <a href="{path}" class="waves-block waves-effect">
+        <div class="title ellipsis" title="{title}">{title}</div>
+        <div class="flex-row flex-middle">
+            <div class="tags ellipsis">
+                {tags}
+            </div>
+            <time class="flex-col time">{date}</time>
+        </div>
+    </a>
+</li>
+</template>
+
+<script src="//unpkg.com/hexo-theme-material-indigo@latest/js/search.min.js" async></script>
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>
