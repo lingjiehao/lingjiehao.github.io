@@ -21,17 +21,14 @@
     
     
     <meta name="keywords" content>
-    <meta name="description" content="环境: Ubuntu 16.04 + Android P源码源码路径: /home/michael/android_code需要编译的模块路径: 比如 /home/michael/test_module/, 内核模块文件名为test_module.c 那么只需要在/home/michael/test_module/中建立一个Makefile文件就可以编译这个模块了.Makefile的模板如下: 1">
-<meta property="og:type" content="article">
+    <meta property="og:type" content="article">
 <meta property="og:title" content="Android中编译单个内核模块">
 <meta property="og:url" content="https://lingjiehao.github.io/2019/06/25/Android中编译单个内核模块/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="环境: Ubuntu 16.04 + Android P源码源码路径: /home/michael/android_code需要编译的模块路径: 比如 /home/michael/test_module/, 内核模块文件名为test_module.c 那么只需要在/home/michael/test_module/中建立一个Makefile文件就可以编译这个模块了.Makefile的模板如下: 1">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-07-21T04:04:01.800Z">
+<meta property="og:updated_time" content="2020-07-21T12:42:35.694Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android中编译单个内核模块">
-<meta name="twitter:description" content="环境: Ubuntu 16.04 + Android P源码源码路径: /home/michael/android_code需要编译的模块路径: 比如 /home/michael/test_module/, 内核模块文件名为test_module.c 那么只需要在/home/michael/test_module/中建立一个Makefile文件就可以编译这个模块了.Makefile的模板如下: 1">
     
         <link rel="alternate" type="application/atom+xml" title="Hexo" href="/atom.xml">
     
@@ -59,8 +56,8 @@
         </a>
         <hgroup class="introduce">
           <h5 class="nickname">Hao Lingjie</h5>
-          <a href="mailto:michael-hao@foxmail.com" title="michael-hao@foxmail.com" class="mail">michael-hao@foxmail.com</a>
-        </hgroup>
+          <a href="mailto:undefined" class="mail">
+        </a></hgroup>
       </div>
     </div>
     <div class="scroll-wrap flex-col">
@@ -76,7 +73,7 @@
             <li class="waves-block waves-effect">
               <a href="/archives">
                 <i class="icon icon-lg icon-archives"></i>
-                归档
+                时间线
               </a>
             </li>
         
@@ -152,7 +149,11 @@
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <p>环境: Ubuntu 16.04 + Android P源码<br>源码路径: /home/michael/android_code<br>需要编译的模块路径: 比如 <code>/home/michael/test_module/</code>, 内核模块文件名为<code>test_module.c</code></p>
+            <!--  -->
+
+<a id="more"></a>
+
+<p>环境: Ubuntu 16.04 + Android P源码<br>源码路径: /home/michael/android_code<br>需要编译的模块路径: 比如 <code>/home/michael/test_module/</code>, 内核模块文件名为<code>test_module.c</code></p>
 <p>那么只需要在<code>/home/michael/test_module/</code>中建立一个Makefile文件就可以编译这个模块了.<br>Makefile的模板如下:</p>
 <figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">obj-m += test_module.o</span><br><span class="line"></span><br><span class="line"><span class="comment"># Android 源码路径</span></span><br><span class="line">SOURCE_PATH := /home/michael/android_src</span><br><span class="line"></span><br><span class="line"><span class="comment"># kernel 的输出目录, &lt;product-name&gt; 因产品而异,下文同</span></span><br><span class="line">KDIR := <span class="variable">$(SOURCE_PATH)</span>/out/target/product/&lt;product-name&gt;/obj/KERNEL_OBJ</span><br><span class="line">PWD :=<span class="variable">$(<span class="built_in">shell</span> pwd)</span></span><br><span class="line"></span><br><span class="line">KERNEL_CFLAGS := KCFLAGS=-mno-android</span><br><span class="line">CROSS := <span class="variable">$(SOURCE_PATH)</span>/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin</span><br><span class="line"></span><br><span class="line"><span class="section">all:</span></span><br><span class="line">	<span class="variable">$(MAKE)</span> -C <span class="variable">$(FLAGS)</span> <span class="variable">$(KDIR)</span> ARCH=arm64 CROSS_COMPILE=<span class="variable">$(CROSS)</span>/aarch64-linux-android- M=<span class="variable">$(PWD)</span> <span class="variable">$(FLAGS)</span> <span class="variable">$(KERNEL_CFLAGS)</span> modules</span><br><span class="line"></span><br><span class="line"><span class="section">clean:</span></span><br><span class="line">	rm -f *.mod.c *.ko *.o .*.cmd *.symvers *.order</span><br><span class="line">	rm -rf .tmp_versions</span><br></pre></td></tr></table></figure>
 
@@ -168,7 +169,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2020-07-21T04:04:01.800Z" itemprop="dateUpdated">2020-07-21 12:04:01</time>
+    最后更新时间：<time datetime="2020-07-21T12:42:35.694Z" itemprop="dateUpdated">2020-07-21 20:42:35</time>
 </span><br>
 
 
@@ -252,7 +253,7 @@
     <div class="waves-block waves-effect next">
       <a href="/2019/06/06/挂载img文件/" id="post-next" class="post-nav-link">
         <div class="tips">Next <i class="icon icon-angle-right icon-lg icon-pl"></i></div>
-        <h4 class="title">Mount RAW file in Ubuntu</h4>
+        <h4 class="title">挂载img文件</h4>
       </a>
     </div>
   

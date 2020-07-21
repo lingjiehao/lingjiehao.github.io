@@ -14,24 +14,24 @@
     
     
     
-    <title>Mount RAW file in Ubuntu | Hexo</title>
+    <title>挂载img文件 | Hexo</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     
     <meta name="theme-color" content="#3F51B5">
     
     
     <meta name="keywords" content>
-    <meta name="description" content="本文主要讲解如何在Ubuntu下挂载raw image镜像，以raspberry pi官方镜像2019-04-08-raspbian-stretch-lite.img 为例  手动挂载 使用fdisk查看分区结构  123456789101112# fdisk -lDisk 2019-04-08-raspbian-stretch-lite.img: 1.7 GiB, 1803550720 byt">
+    <meta name="description" content="本文主要讲解如何在Ubuntu下挂载raw image镜像，以raspberry pi官方镜像2019-04-08-raspbian-stretch-lite.img 为例">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Mount RAW file in Ubuntu">
+<meta property="og:title" content="挂载img文件">
 <meta property="og:url" content="https://lingjiehao.github.io/2019/06/06/挂载img文件/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="本文主要讲解如何在Ubuntu下挂载raw image镜像，以raspberry pi官方镜像2019-04-08-raspbian-stretch-lite.img 为例  手动挂载 使用fdisk查看分区结构  123456789101112# fdisk -lDisk 2019-04-08-raspbian-stretch-lite.img: 1.7 GiB, 1803550720 byt">
+<meta property="og:description" content="本文主要讲解如何在Ubuntu下挂载raw image镜像，以raspberry pi官方镜像2019-04-08-raspbian-stretch-lite.img 为例">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-07-21T09:00:18.695Z">
+<meta property="og:updated_time" content="2020-07-21T12:38:16.051Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Mount RAW file in Ubuntu">
-<meta name="twitter:description" content="本文主要讲解如何在Ubuntu下挂载raw image镜像，以raspberry pi官方镜像2019-04-08-raspbian-stretch-lite.img 为例  手动挂载 使用fdisk查看分区结构  123456789101112# fdisk -lDisk 2019-04-08-raspbian-stretch-lite.img: 1.7 GiB, 1803550720 byt">
+<meta name="twitter:title" content="挂载img文件">
+<meta name="twitter:description" content="本文主要讲解如何在Ubuntu下挂载raw image镜像，以raspberry pi官方镜像2019-04-08-raspbian-stretch-lite.img 为例">
     
         <link rel="alternate" type="application/atom+xml" title="Hexo" href="/atom.xml">
     
@@ -59,8 +59,8 @@
         </a>
         <hgroup class="introduce">
           <h5 class="nickname">Hao Lingjie</h5>
-          <a href="mailto:michael-hao@foxmail.com" title="michael-hao@foxmail.com" class="mail">michael-hao@foxmail.com</a>
-        </hgroup>
+          <a href="mailto:undefined" class="mail">
+        </a></hgroup>
       </div>
     </div>
     <div class="scroll-wrap flex-col">
@@ -76,7 +76,7 @@
             <li class="waves-block waves-effect">
               <a href="/archives">
                 <i class="icon icon-lg icon-archives"></i>
-                归档
+                时间线
               </a>
             </li>
         
@@ -105,7 +105,7 @@
         <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light on" id="menu-toggle">
           <i class="icon icon-lg icon-navicon"></i>
         </a>
-        <div class="flex-col header-title ellipsis">Mount RAW file in Ubuntu</div>
+        <div class="flex-col header-title ellipsis">挂载img文件</div>
         
         
         <a href="javascript:;" class="header-icon waves-effect waves-circle waves-light" id="menuShare">
@@ -117,7 +117,7 @@
 <header class="content-header post-header">
 
     <div class="container fade-scale">
-        <h1 class="title">Mount RAW file in Ubuntu</h1>
+        <h1 class="title">挂载img文件</h1>
         <h5 class="subtitle">
             
                 <time datetime="2019-06-06T20:43:46.000Z" itemprop="datePublished" class="page-time">
@@ -148,7 +148,7 @@
 <article id="post-挂载img文件" class="post-article article-type-post fade" itemprop="blogPost">
 
     <div class="post-card">
-        <h1 class="post-card-title">Mount RAW file in Ubuntu</h1>
+        <h1 class="post-card-title">挂载img文件</h1>
         <div class="post-meta">
             <time class="post-time" title="2019-06-07 04:43:46" datetime="2019-06-06T20:43:46.000Z" itemprop="datePublished">2019-06-07</time>
 
@@ -159,9 +159,9 @@
 
         </div>
         <div class="post-content" id="post-content" itemprop="postContent">
-            <blockquote>
-<p>本文主要讲解如何在Ubuntu下挂载raw image镜像，以raspberry pi官方镜像<strong>2019-04-08-raspbian-stretch-lite.img</strong> 为例</p>
-</blockquote>
+            <p>本文主要讲解如何在Ubuntu下挂载raw image镜像，以raspberry pi官方镜像<strong>2019-04-08-raspbian-stretch-lite.img</strong> 为例</p>
+<a id="more"></a>
+
 <h2 id="手动挂载"><a href="#手动挂载" class="headerlink" title="手动挂载"></a>手动挂载</h2><ol>
 <li>使用fdisk查看分区结构</li>
 </ol>
@@ -178,7 +178,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ losetup -l</span><br><span class="line">NAME       SIZELIMIT OFFSET AUTOCLEAR RO BACK-FILE                                                    DIO LOG-SEC</span><br><span class="line">/dev/loop0         0      0         0  0 /home/michael/Downloads/2019-04-08-raspbian-stretch-lite.img   0     512</span><br></pre></td></tr></table></figure>
 
 <p>或者使用lsblk查看</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ lsblk</span><br><span class="line">NAME        MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT</span><br><span class="line">loop0         7:0    0   1.7G  0 loop </span><br><span class="line">├─loop0p1   259:6    0  42.9M  0 loop </span><br><span class="line">└─loop0p2   259:7    0   1.6G  0 loop</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">$ lsblk</span><br><span class="line">NAME        MAJ:MIN RM   SIZE RO TYPE MOUNTPOINT</span><br><span class="line">loop0         7:0    0   1.7G  0 loop</span><br><span class="line">├─loop0p1   259:6    0  42.9M  0 loop</span><br><span class="line">└─loop0p2   259:7    0   1.6G  0 loop</span><br></pre></td></tr></table></figure>
 
 <p>挂载</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># mount /dev/loop0p1 tmp</span><br></pre></td></tr></table></figure>
@@ -196,7 +196,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2020-07-21T09:00:18.695Z" itemprop="dateUpdated">2020-07-21 17:00:18</time>
+    最后更新时间：<time datetime="2020-07-21T12:38:16.051Z" itemprop="dateUpdated">2020-07-21 20:38:16</time>
 </span><br>
 
 
@@ -228,7 +228,7 @@
 <div class="page-share" id="pageShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingjiehao.github.io/2019/06/06/挂载img文件/&title=《Mount RAW file in Ubuntu》 — Hexo&pic=https://lingjiehao.github.io/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingjiehao.github.io/2019/06/06/挂载img文件/&title=《挂载img文件》 — Hexo&pic=https://lingjiehao.github.io/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -238,7 +238,7 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingjiehao.github.io/2019/06/06/挂载img文件/&title=《Mount RAW file in Ubuntu》 — Hexo&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingjiehao.github.io/2019/06/06/挂载img文件/&title=《挂载img文件》 — Hexo&source=本文主要讲解如何在Ubuntu下挂载raw image镜像，以raspberry pi官方镜像2019-04-08-raspbian-stretch-li..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
@@ -248,7 +248,7 @@
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Mount RAW file in Ubuntu》 — Hexo&url=https://lingjiehao.github.io/2019/06/06/挂载img文件/&via=https://lingjiehao.github.io" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《挂载img文件》 — Hexo&url=https://lingjiehao.github.io/2019/06/06/挂载img文件/&via=https://lingjiehao.github.io" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>
@@ -377,7 +377,7 @@
 <div class="global-share" id="globalShare">
     <ul class="reset share-icons">
       <li>
-        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingjiehao.github.io/2019/06/06/挂载img文件/&title=《Mount RAW file in Ubuntu》 — Hexo&pic=https://lingjiehao.github.io/img/avatar.jpg" data-title="微博">
+        <a class="weibo share-sns" target="_blank" href="http://service.weibo.com/share/share.php?url=https://lingjiehao.github.io/2019/06/06/挂载img文件/&title=《挂载img文件》 — Hexo&pic=https://lingjiehao.github.io/img/avatar.jpg" data-title="微博">
           <i class="icon icon-weibo"></i>
         </a>
       </li>
@@ -387,7 +387,7 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingjiehao.github.io/2019/06/06/挂载img文件/&title=《Mount RAW file in Ubuntu》 — Hexo&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingjiehao.github.io/2019/06/06/挂载img文件/&title=《挂载img文件》 — Hexo&source=本文主要讲解如何在Ubuntu下挂载raw image镜像，以raspberry pi官方镜像2019-04-08-raspbian-stretch-li..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
@@ -397,7 +397,7 @@
         </a>
       </li>
       <li>
-        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《Mount RAW file in Ubuntu》 — Hexo&url=https://lingjiehao.github.io/2019/06/06/挂载img文件/&via=https://lingjiehao.github.io" data-title=" Twitter">
+        <a class="twitter share-sns" target="_blank" href="https://twitter.com/intent/tweet?text=《挂载img文件》 — Hexo&url=https://lingjiehao.github.io/2019/06/06/挂载img文件/&via=https://lingjiehao.github.io" data-title=" Twitter">
           <i class="icon icon-twitter"></i>
         </a>
       </li>

@@ -28,7 +28,7 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="网上关于安卓编译环境搭建的文章有不少，但质量参差不齐，关于安装哪些软件各有各的说法，这样带来的后果是如果编译出错了，就眉毛胡子一把抓，把所有人说的所有的软件都安装上去，这样有可能带来的问题会更多。 我搭建编译境的时候幸运地在DigitalOcean上找到了一篇详细介绍安卓编译环境搭建的文章,了解DigitalOcean的人都知道他家的文章质量很高，这篇也不例外，我按照文中的方法搭建后，在AOSP8">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-07-21T04:04:01.800Z">
+<meta property="og:updated_time" content="2020-07-21T12:38:50.379Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Ubuntu 16.04下Android O编译环境的搭建">
 <meta name="twitter:description" content="网上关于安卓编译环境搭建的文章有不少，但质量参差不齐，关于安装哪些软件各有各的说法，这样带来的后果是如果编译出错了，就眉毛胡子一把抓，把所有人说的所有的软件都安装上去，这样有可能带来的问题会更多。 我搭建编译境的时候幸运地在DigitalOcean上找到了一篇详细介绍安卓编译环境搭建的文章,了解DigitalOcean的人都知道他家的文章质量很高，这篇也不例外，我按照文中的方法搭建后，在AOSP8">
@@ -59,8 +59,8 @@
         </a>
         <hgroup class="introduce">
           <h5 class="nickname">Hao Lingjie</h5>
-          <a href="mailto:michael-hao@foxmail.com" title="michael-hao@foxmail.com" class="mail">michael-hao@foxmail.com</a>
-        </hgroup>
+          <a href="mailto:undefined" class="mail">
+        </a></hgroup>
       </div>
     </div>
     <div class="scroll-wrap flex-col">
@@ -76,7 +76,7 @@
             <li class="waves-block waves-effect">
               <a href="/archives">
                 <i class="icon icon-lg icon-archives"></i>
-                归档
+                时间线
               </a>
             </li>
         
@@ -162,6 +162,8 @@
             <p>网上关于安卓编译环境搭建的文章有不少，但质量参差不齐，关于安装哪些软件各有各的说法，这样带来的后果是如果编译出错了，就眉毛胡子一把抓，把所有人说的所有的软件都安装上去，这样有可能带来的问题会更多。</p>
 <p>我搭建编译境的时候幸运地在DigitalOcean上找到了一篇详细介绍安卓编译环境搭建的文章,了解DigitalOcean的人都知道他家的文章质量很高，这篇也不例外，我按照文中的方法搭建后，在AOSP8.1以及公司的代码上都是一次编译成功。</p>
 <p>以下是简单的安装记录，详细介绍请参考<a href="https://www.digitalocean.com/community/tutorials/how-to-build-android-roms-on-ubuntu-16-04" target="_blank" rel="noopener">原文</a>。</p>
+<a id="more"></a>
+
 <h2 id="安装repo"><a href="#安装repo" class="headerlink" title="安装repo"></a>安装repo</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install repo</span><br></pre></td></tr></table></figure>
 
 <h2 id="配置git的email和username"><a href="#配置git的email和username" class="headerlink" title="配置git的email和username"></a>配置git的email和username</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name "your name"</span><br><span class="line">git config --global user.email "mailto:your_email@your_domain.com"</span><br></pre></td></tr></table></figure>
@@ -187,7 +189,7 @@
     <div class="content">
         
 <span class="post-time">
-    最后更新时间：<time datetime="2020-07-21T04:04:01.800Z" itemprop="dateUpdated">2020-07-21 12:04:01</time>
+    最后更新时间：<time datetime="2020-07-21T12:38:50.379Z" itemprop="dateUpdated">2020-07-21 20:38:50</time>
 </span><br>
 
 
@@ -229,7 +231,7 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingjiehao.github.io/2019/05/23/Ubuntu-16-04下Android-O编译环境的搭建/&title=《Ubuntu 16.04下Android O编译环境的搭建》 — Hexo&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingjiehao.github.io/2019/05/23/Ubuntu-16-04下Android-O编译环境的搭建/&title=《Ubuntu 16.04下Android O编译环境的搭建》 — Hexo&source=网上关于安卓编译环境搭建的文章有不少，但质量参差不齐，关于安装哪些软件各有各的说法，这样带来的后果是如果编译出错了，就眉毛胡子一把抓，把所有人说的所有的软..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
@@ -269,7 +271,7 @@
     <div class="waves-block waves-effect prev">
       <a href="/2019/06/06/挂载img文件/" id="post-prev" class="post-nav-link">
         <div class="tips"><i class="icon icon-angle-left icon-lg icon-pr"></i> Prev</div>
-        <h4 class="title">Mount RAW file in Ubuntu</h4>
+        <h4 class="title">挂载img文件</h4>
       </a>
     </div>
   
@@ -371,7 +373,7 @@
         </a>
       </li>
       <li>
-        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingjiehao.github.io/2019/05/23/Ubuntu-16-04下Android-O编译环境的搭建/&title=《Ubuntu 16.04下Android O编译环境的搭建》 — Hexo&source=" data-title=" QQ">
+        <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://lingjiehao.github.io/2019/05/23/Ubuntu-16-04下Android-O编译环境的搭建/&title=《Ubuntu 16.04下Android O编译环境的搭建》 — Hexo&source=网上关于安卓编译环境搭建的文章有不少，但质量参差不齐，关于安装哪些软件各有各的说法，这样带来的后果是如果编译出错了，就眉毛胡子一把抓，把所有人说的所有的软..." data-title=" QQ">
           <i class="icon icon-qq"></i>
         </a>
       </li>
