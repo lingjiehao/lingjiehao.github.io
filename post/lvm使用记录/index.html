@@ -1,25 +1,25 @@
-<!doctype html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><link href="https://fonts.googleapis.com/css?family=Ubuntu" rel=stylesheet><title>LVM使用记录</title><link rel=stylesheet href=/css/stylesheet.css></head><body><section id=page-title><h1><a href=/>Elephants</a></h1></section><section class=blog-post><h1>LVM使用记录</h1><div class=blog-post-subheader>April 2, 2021</div><div class=blog-post-content><h1 id=在新的硬盘分区上使用lvm>在新的硬盘/分区上使用lvm</h1><hr><h2 id=创建新分区>创建新分区</h2><div class=highlight><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback># 创建sda1
+<!doctype html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><link href="https://fonts.googleapis.com/css?family=Ubuntu" rel=stylesheet><title>LVM使用记录</title><link rel=stylesheet href=/css/stylesheet.css></head><body><section id=page-title><h1><a href=/>Elephants</a></h1></section><section class=blog-post><h1>LVM使用记录</h1><div class=blog-post-subheader>April 2, 2021</div><div class=blog-post-content><h1 id=在新的硬盘分区上使用lvm>在新的硬盘/分区上使用lvm</h1><hr><h2 id=创建新分区>创建新分区</h2><div class=highlight><pre style=color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback># 创建sda1
 fdisk /dev/sda
 g
 n
 ...
 w
-</code></pre></div><h2 id=创建pv>创建PV</h2><div class=highlight><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>pvcreate /dev/sda1
-</code></pre></div><h2 id=创建vg>创建VG</h2><div class=highlight><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback># vg1为VG的名称, sda1为之前创建好的PV
+</code></pre></div><h2 id=创建pv>创建PV</h2><div class=highlight><pre style=color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>pvcreate /dev/sda1
+</code></pre></div><h2 id=创建vg>创建VG</h2><div class=highlight><pre style=color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback># vg1为VG的名称, sda1为之前创建好的PV
 vgcreate vg1 /dev/sda1
 
 # 同时添加多块硬盘
 vgcreate vg1 /dev/sda1 /dev/sdb1
-</code></pre></div><h2 id=创建lv>创建LV</h2><div class=highlight><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback># 创建大小为10G, 名为test1的LV
+</code></pre></div><h2 id=创建lv>创建LV</h2><div class=highlight><pre style=color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback># 创建大小为10G, 名为test1的LV
 # vg1为之前创建的VG名称
 
 lvcreate -L 10G -n &#34;test1&#34; vg1
-</code></pre></div><p>这一步完成后, 会创建一个新的硬盘<code>/dev/vg1/test1</code></p><h2 id=格式化新创建的硬盘>格式化新创建的硬盘</h2><div class=highlight><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>mkfs.ext4 /dev/vg1/test1
-</code></pre></div><h1 id=lv扩容>LV扩容</h1><hr><div class=highlight><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback># 为/dev/vg1/test1新增20GB空间
+</code></pre></div><p>这一步完成后, 会创建一个新的硬盘<code>/dev/vg1/test1</code></p><h2 id=格式化新创建的硬盘>格式化新创建的硬盘</h2><div class=highlight><pre style=color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>mkfs.ext4 /dev/vg1/test1
+</code></pre></div><h1 id=lv扩容>LV扩容</h1><hr><div class=highlight><pre style=color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback># 为/dev/vg1/test1新增20GB空间
 lvextend -L +20G vg1/test1
 
 # 重载逻辑卷大小
 resize2fs -p /dev/vg1/test1
-</code></pre></div><h1 id=vg扩容>VG扩容</h1><hr><div class=highlight><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback># 向vg1中添加新的PV:/dev/sdc1
+</code></pre></div><h1 id=vg扩容>VG扩容</h1><hr><div class=highlight><pre style=color:#586e75;background-color:#eee8d5;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback># 向vg1中添加新的PV:/dev/sdc1
 vgextend vg1 /dev/sdc1
 </code></pre></div></div></section></body></html>
