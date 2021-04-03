@@ -15,4 +15,38 @@ $ mktemp -d
 <span style=color:#75715e># 创建临时文件夹，并指定模板</span>
 $ mktemp -d -t test-XXXXX
 /tmp/test-4kceq
-</code></pre></div><p><a href=https://code-maven.com/create-temporary-directory-on-linux-using-bash>https://code-maven.com/create-temporary-directory-on-linux-using-bash</a></p></div></section></body></html>
+</code></pre></div><p><a href=https://code-maven.com/create-temporary-directory-on-linux-using-bash>https://code-maven.com/create-temporary-directory-on-linux-using-bash</a></p><h2 id=判断字符串是否为空>判断字符串是否为空</h2><p>正确做法</p><div class=highlight><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=color:#75715e>#!/bin/sh
+</span><span style=color:#75715e></span>
+<span style=color:#111>STRING</span><span style=color:#f92672>=</span>
+
+<span style=color:#00a8c8>if</span> <span style=color:#f92672>[</span> -z <span style=color:#d88200>&#34;</span><span style=color:#111>$STRING</span><span style=color:#d88200>&#34;</span> <span style=color:#f92672>]</span><span style=color:#111>;</span> <span style=color:#00a8c8>then</span>
+    <span style=color:#111>echo</span> <span style=color:#d88200>&#34;STRING is empty&#34;</span>
+<span style=color:#00a8c8>fi</span>
+
+<span style=color:#00a8c8>if</span> <span style=color:#f92672>[</span> -n <span style=color:#d88200>&#34;</span><span style=color:#111>$STRING</span><span style=color:#d88200>&#34;</span> <span style=color:#f92672>]</span><span style=color:#111>;</span> <span style=color:#00a8c8>then</span>
+    <span style=color:#111>echo</span> <span style=color:#d88200>&#34;STRING is not empty&#34;</span>
+<span style=color:#00a8c8>fi</span>
+---------------
+输出正确结果：
+
+root@james-desktop:~# ./zerostring.sh
+STRING is empty
+
+</code></pre></div><p>错误做法</p><div class=highlight><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=color:#75715e>#!/bin/sh
+</span><span style=color:#75715e></span>
+<span style=color:#111>STRING</span><span style=color:#f92672>=</span>
+
+<span style=color:#00a8c8>if</span> <span style=color:#f92672>[</span> -z <span style=color:#111>$STRING</span> <span style=color:#f92672>]</span><span style=color:#111>;</span> <span style=color:#00a8c8>then</span>
+    <span style=color:#111>echo</span> <span style=color:#d88200>&#34;STRING is empty&#34;</span>
+<span style=color:#00a8c8>fi</span>
+
+<span style=color:#00a8c8>if</span> <span style=color:#f92672>[</span> -n <span style=color:#111>$STRING</span> <span style=color:#f92672>]</span><span style=color:#111>;</span> <span style=color:#00a8c8>then</span>
+    <span style=color:#111>echo</span> <span style=color:#d88200>&#34;STRING is not empty&#34;</span>
+<span style=color:#00a8c8>fi</span>
+---------------------
+输出错误结果：
+
+root@james-desktop:~# ./zerostring.sh
+STRING is empty
+STRING is not empty
+</code></pre></div><p><a href=https://www.cnblogs.com/cute/archive/2011/08/26/2154137.html>https://www.cnblogs.com/cute/archive/2011/08/26/2154137.html</a></p><p>更多用法： <a href=https://www.cyberciti.biz/faq/unix-linux-bash-script-check-if-variable-is-empty/>https://www.cyberciti.biz/faq/unix-linux-bash-script-check-if-variable-is-empty/</a></p></div></section></body></html>
