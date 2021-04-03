@@ -1,0 +1,11 @@
+<!doctype html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><link href="https://fonts.googleapis.com/css?family=Ubuntu" rel=stylesheet><title>Ubuntu设置静态IP与动态IP</title><link rel=stylesheet href=/css/stylesheet.css></head><body><section id=page-title><h1><a href=/>Aliens</a></h1></section><section class=blog-post><h1>Ubuntu设置静态IP与动态IP</h1><div class=blog-post-subheader>April 3, 2021</div><div class=blog-post-content><h2 id=动态ip>动态IP</h2><div class=highlight><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#75715e># cat /etc/netplan/01-netcfg.yaml</span>
+
+<span style=color:#75715e># This file describes the network interfaces available on your system</span>
+<span style=color:#75715e># For more information, see netplan(5).</span>
+<span style=color:#f92672>network</span><span style=color:#111>:</span>
+  <span style=color:#f92672>version</span><span style=color:#111>:</span> <span style=color:#ae81ff>2</span>
+  <span style=color:#f92672>renderer</span><span style=color:#111>:</span> <span style=color:#ae81ff>networkd</span>
+  <span style=color:#f92672>ethernets</span><span style=color:#111>:</span>
+    <span style=color:#f92672>eth0</span><span style=color:#111>:</span>
+      <span style=color:#f92672>dhcp4</span><span style=color:#111>:</span> <span style=color:#00a8c8>yes</span>
+</code></pre></div></div></section></body></html>
