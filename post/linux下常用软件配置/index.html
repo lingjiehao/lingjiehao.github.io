@@ -1,0 +1,17 @@
+<!doctype html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><link href="https://fonts.loli.net/css?family=Ubuntu" rel=stylesheet><title>Linux下常用软件配置</title><link rel=stylesheet href=/css/stylesheet.css></head><body><section id=page-title><h1><a href=/>Aliens</a></h1></section><section class=blog-post><h1>Linux下常用软件配置</h1><div class=blog-post-subheader>April 3, 2021</div><div class=blog-post-content><h2 id=samba>Samba</h2><h3 id=下载>下载</h3><div class=highlight><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>sudo apt install samba
+</code></pre></div><h3 id=修改配置文件>修改配置文件</h3><div class=highlight><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>[share]
+    path = /home/xyz/share/
+    create mask = 0664
+    directory mask = 0775
+    writable = yes
+    valid users = xyz
+</code></pre></div><p>其中:</p><ul><li><code>[share]</code>是你共享出来文件夹的名称</li><li><code>create mask</code> 设置的是当新文件创建时的权限(该配置为<code>664</code>权限)</li><li><code>directory mask</code> 设置的是当新文件夹创建时的权限(该配置为664权限)</li><li><code>valid users</code> 表示只有名单内的用户才有权限访问</li></ul><h3 id=添加用户>添加用户</h3><div class=highlight><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>sudo smbpasswd -a xyz
+</code></pre></div><p>用户xyz必须是系统中存在的用户,和当前用户<strong>没有关系</strong>.</p><h3 id=启动服务>启动服务</h3><div class=highlight><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>sudo service smbd start
+</code></pre></div><h2 id=grub>Grub</h2><h3 id=记住上次选择的启动项>记住上次选择的启动项</h3><p>1.修改/etc/default/grub</p><div class=highlight><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>GRUB_DEFAULT=saved
+GRUB_SAVEDEFAULT=true
+</code></pre></div><p>2.更新grub</p><div class=highlight><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback># Ubuntu下可使用sudo update-grub
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+</code></pre></div><h3 id=修改网卡名称enp2s0为eth0>修改网卡名称enp2s0为eth0</h3><p>1.修改/etc/default/grub</p><div class=highlight><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>GRUB_CMDLINE_LINUX=&#34;net.ifnames=0 biosdevname=0&#34;
+</code></pre></div><p>2.更新grub</p><div class=highlight><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback># Ubuntu下可使用sudo update-grub
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+</code></pre></div><p><strong>注意</strong></p><ul><li>ubuntu 16.04注意还要修改/etc/network/interfaces中的网卡名称</li><li>ubuntu 18.04注意还要修改netplan中的网卡名称</li></ul></div></section></body></html>
