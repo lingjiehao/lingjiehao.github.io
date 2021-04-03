@@ -6,7 +6,7 @@
 	<span style=color:#00a8c8>struct</span> <span style=color:#111>pci_dev</span> <span style=color:#f92672>*</span><span style=color:#111>pdev</span> <span style=color:#f92672>=</span> <span style=color:#111>to_pci_dev</span><span style=color:#111>(</span><span style=color:#111>dev</span><span style=color:#111>);</span>
 	<span style=color:#00a8c8>struct</span> <span style=color:#111>zpci_dev</span> <span style=color:#f92672>*</span><span style=color:#111>zdev</span> <span style=color:#f92672>=</span> <span style=color:#111>to_zpci</span><span style=color:#111>(</span><span style=color:#111>pdev</span><span style=color:#111>);</span>
 
-        <span style=color:#00a8c8>return</span> <span style=color:#111>memory_read_from_buffer</span><span style=color:#111>(</span><span style=color:#111>buf</span><span style=color:#111>,</span> <span style=color:#111>count</span><span style=color:#111>,</span> <span style=color:#f92672>&amp;</span><span style=color:#111>off</span><span style=color:#111>,</span> <span style=color:#111>zdev</span><span style=color:#f92672>-&gt;</span><span style=color:#111>util_str</span><span style=color:#111>,</span>
+    <span style=color:#00a8c8>return</span> <span style=color:#111>memory_read_from_buffer</span><span style=color:#111>(</span><span style=color:#111>buf</span><span style=color:#111>,</span> <span style=color:#111>count</span><span style=color:#111>,</span> <span style=color:#f92672>&amp;</span><span style=color:#111>off</span><span style=color:#111>,</span> <span style=color:#111>zdev</span><span style=color:#f92672>-&gt;</span><span style=color:#111>util_str</span><span style=color:#111>,</span>
 				       <span style=color:#00a8c8>sizeof</span><span style=color:#111>(</span><span style=color:#111>zdev</span><span style=color:#f92672>-&gt;</span><span style=color:#111>util_str</span><span style=color:#111>));</span>
 <span style=color:#111>}</span>
 
@@ -31,13 +31,15 @@
 <span style=color:#00a8c8>static</span> <span style=color:#00a8c8>int</span> <span style=color:#75af00>zpci_sysfs_init</span><span style=color:#111>(</span><span style=color:#00a8c8>struct</span> <span style=color:#111>device</span> <span style=color:#f92672>*</span><span style=color:#111>dev</span><span style=color:#111>)</span>
 <span style=color:#111>{</span>
     <span style=color:#00a8c8>int</span> <span style=color:#111>rc</span> <span style=color:#f92672>=</span> <span style=color:#ae81ff>0</span><span style=color:#111>;</span>
-        <span style=color:#00a8c8>if</span> <span style=color:#111>(</span><span style=color:#f92672>!</span><span style=color:#111>dev</span><span style=color:#111>)</span> <span style=color:#111>{</span>
-	<span style=color:#111>pr_err</span><span style=color:#111>(</span><span style=color:#d88200>&#34;%s: Invalid params</span><span style=color:#8045ff>\n</span><span style=color:#d88200>&#34;</span><span style=color:#111>,</span> <span style=color:#111>__func__</span><span style=color:#111>);</span>
-	<span style=color:#00a8c8>return</span> <span style=color:#f92672>-</span><span style=color:#111>EINVAL</span><span style=color:#111>;</span>
-<span style=color:#111>}</span>
-        <span style=color:#111>rc</span> <span style=color:#f92672>=</span> <span style=color:#111>sysfs_create_group</span><span style=color:#111>(</span><span style=color:#f92672>&amp;</span><span style=color:#111>dev</span><span style=color:#f92672>-&gt;</span><span style=color:#111>kobj</span><span style=color:#111>,</span> <span style=color:#f92672>&amp;</span><span style=color:#111>zpci_attr_groups</span><span style=color:#111>);</span>
-<span style=color:#00a8c8>if</span> <span style=color:#111>(</span><span style=color:#111>rc</span><span style=color:#111>)</span>
-	<span style=color:#111>pr_err</span><span style=color:#111>(</span><span style=color:#d88200>&#34;%s: sysfs group creation failed %d</span><span style=color:#8045ff>\n</span><span style=color:#d88200>&#34;</span><span style=color:#111>,</span> <span style=color:#111>__func__</span><span style=color:#111>,</span> <span style=color:#111>rc</span><span style=color:#111>);</span>
-        <span style=color:#00a8c8>return</span> <span style=color:#111>rc</span><span style=color:#111>;</span>
+    <span style=color:#00a8c8>if</span> <span style=color:#111>(</span><span style=color:#f92672>!</span><span style=color:#111>dev</span><span style=color:#111>)</span> <span style=color:#111>{</span>
+        <span style=color:#111>pr_err</span><span style=color:#111>(</span><span style=color:#d88200>&#34;%s: Invalid params</span><span style=color:#8045ff>\n</span><span style=color:#d88200>&#34;</span><span style=color:#111>,</span> <span style=color:#111>__func__</span><span style=color:#111>);</span>
+        <span style=color:#00a8c8>return</span> <span style=color:#f92672>-</span><span style=color:#111>EINVAL</span><span style=color:#111>;</span>
+    <span style=color:#111>}</span>
+
+    <span style=color:#111>rc</span> <span style=color:#f92672>=</span> <span style=color:#111>sysfs_create_group</span><span style=color:#111>(</span><span style=color:#f92672>&amp;</span><span style=color:#111>dev</span><span style=color:#f92672>-&gt;</span><span style=color:#111>kobj</span><span style=color:#111>,</span> <span style=color:#f92672>&amp;</span><span style=color:#111>zpci_attr_groups</span><span style=color:#111>);</span>
+    <span style=color:#00a8c8>if</span> <span style=color:#111>(</span><span style=color:#111>rc</span><span style=color:#111>)</span>
+	    <span style=color:#111>pr_err</span><span style=color:#111>(</span><span style=color:#d88200>&#34;%s: sysfs group creation failed %d</span><span style=color:#8045ff>\n</span><span style=color:#d88200>&#34;</span><span style=color:#111>,</span> <span style=color:#111>__func__</span><span style=color:#111>,</span> <span style=color:#111>rc</span><span style=color:#111>);</span>
+
+    <span style=color:#00a8c8>return</span> <span style=color:#111>rc</span><span style=color:#111>;</span>
 <span style=color:#111>}</span>
 </code></pre></div><p><a href=https://elixir.bootlin.com/linux/v4.6/source/arch/s390/pci/pci_sysfs.c#L79>https://elixir.bootlin.com/linux/v4.6/source/arch/s390/pci/pci_sysfs.c#L79</a></p></div></section></body></html>
