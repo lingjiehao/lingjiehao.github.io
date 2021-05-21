@@ -1,4 +1,12 @@
-<!doctype html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><link href="https://fonts.loli.net/css?family=Ubuntu" rel=stylesheet><title>在Gerrit上建立Android代码仓库</title><link rel=stylesheet href=/css/stylesheet.css></head><body><section id=page-title><h1><a href=/>Aliens</a></h1></section><section class=blog-post><h1>在Gerrit上建立Android代码仓库</h1><div class=blog-post-subheader>April 2, 2021</div><div class=blog-post-content><div class=highlight><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=color:#111>GIT_USR</span><span style=color:#f92672>=</span>gerrit-admin
+<!doctype html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><link href="https://fonts.loli.net/css?family=Ubuntu" rel=stylesheet><title>在Gerrit上建立Android代码仓库</title><link rel=stylesheet href=/css/stylesheet.css></head><body><section id=page-title><h1><a href=/>Aliens</a></h1></section><section class=blog-post><h1>在Gerrit上建立Android代码仓库</h1><div class=blog-post-subheader>April 2, 2021</div><div class=blog-post-content><div class=highlight><div style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=color:#111>GIT_USR</span><span style=color:#f92672>=</span>gerrit-admin
 <span style=color:#111>GERRIT_HOST</span><span style=color:#f92672>=</span>192.168.1.1
 <span style=color:#111>PARENT_REPO</span><span style=color:#f92672>=</span>aosp-parent-repo
 <span style=color:#111>GERRIT_REPO_OWNER_GRP</span><span style=color:#f92672>=</span>aosp-admin
@@ -6,4 +14,4 @@
 repo forall -vc <span style=color:#d88200>&#39;ssh -p 29418 $GIT_USR@$GERRIT_HOST gerrit create-project --owner $GERRIT_REPO_OWNER_GRP $REPO_PROJECT;&#39;</span>
 repo forall -vc <span style=color:#d88200>&#39;ssh -p 29418 $GIT_USR@$GERRIT_HOST gerrit set-project-parent --parent $PARENT_REPO $REPO_PROJECT;&#39;</span>
 repo forall -c <span style=color:#d88200>&#39;git push ssh://$GIT_USR@$GERRIT_HOST:29418/$REPO_PROJECT +refs/heads/* +refs/tags/*&#39;</span>
-</code></pre></div></div></section></body></html>
+</code></pre></td></tr></table></div></div></div></section></body></html>

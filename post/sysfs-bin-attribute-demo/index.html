@@ -1,4 +1,48 @@
-<!doctype html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><link href="https://fonts.loli.net/css?family=Ubuntu" rel=stylesheet><title>Sysfs Bin Attribute Demo</title><link rel=stylesheet href=/css/stylesheet.css></head><body><section id=page-title><h1><a href=/>Aliens</a></h1></section><section class=blog-post><h1>Sysfs Bin Attribute Demo</h1><div class=blog-post-subheader>April 3, 2021</div><div class=blog-post-content><div class=highlight><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#00a8c8>static</span> <span style=color:#111>ssize_t</span> <span style=color:#75af00>util_string_read</span><span style=color:#111>(</span><span style=color:#00a8c8>struct</span> <span style=color:#111>file</span> <span style=color:#f92672>*</span><span style=color:#111>filp</span><span style=color:#111>,</span> <span style=color:#00a8c8>struct</span> <span style=color:#111>kobject</span> <span style=color:#f92672>*</span><span style=color:#111>kobj</span><span style=color:#111>,</span>
+<!doctype html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><link href="https://fonts.loli.net/css?family=Ubuntu" rel=stylesheet><title>Sysfs Bin Attribute Demo</title><link rel=stylesheet href=/css/stylesheet.css></head><body><section id=page-title><h1><a href=/>Aliens</a></h1></section><section class=blog-post><h1>Sysfs Bin Attribute Demo</h1><div class=blog-post-subheader>April 3, 2021</div><div class=blog-post-content><div class=highlight><div style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">32
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">33
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">34
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">35
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">36
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">37
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">38
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">39
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">40
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">41
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">42
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">43
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">44
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#00a8c8>static</span> <span style=color:#111>ssize_t</span> <span style=color:#75af00>util_string_read</span><span style=color:#111>(</span><span style=color:#00a8c8>struct</span> <span style=color:#111>file</span> <span style=color:#f92672>*</span><span style=color:#111>filp</span><span style=color:#111>,</span> <span style=color:#00a8c8>struct</span> <span style=color:#111>kobject</span> <span style=color:#f92672>*</span><span style=color:#111>kobj</span><span style=color:#111>,</span>
 				<span style=color:#00a8c8>struct</span> <span style=color:#111>bin_attribute</span> <span style=color:#f92672>*</span><span style=color:#111>attr</span><span style=color:#111>,</span> <span style=color:#00a8c8>char</span> <span style=color:#f92672>*</span><span style=color:#111>buf</span><span style=color:#111>,</span>
 				<span style=color:#111>loff_t</span> <span style=color:#111>off</span><span style=color:#111>,</span> <span style=color:#111>size_t</span> <span style=color:#111>count</span><span style=color:#111>)</span>
 <span style=color:#111>{</span>
@@ -42,4 +86,4 @@
 
     <span style=color:#00a8c8>return</span> <span style=color:#111>rc</span><span style=color:#111>;</span>
 <span style=color:#111>}</span>
-</code></pre></div><p><a href=https://elixir.bootlin.com/linux/v4.6/source/arch/s390/pci/pci_sysfs.c#L79>https://elixir.bootlin.com/linux/v4.6/source/arch/s390/pci/pci_sysfs.c#L79</a></p></div></section></body></html>
+</code></pre></td></tr></table></div></div><p><a href=https://elixir.bootlin.com/linux/v4.6/source/arch/s390/pci/pci_sysfs.c#L79>https://elixir.bootlin.com/linux/v4.6/source/arch/s390/pci/pci_sysfs.c#L79</a></p></div></section></body></html>

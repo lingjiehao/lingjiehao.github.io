@@ -1,4 +1,13 @@
-<!doctype html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><link href="https://fonts.loli.net/css?family=Ubuntu" rel=stylesheet><title>Shell中的常用语法</title><link rel=stylesheet href=/css/stylesheet.css></head><body><section id=page-title><h1><a href=/>Aliens</a></h1></section><section class=blog-post><h1>Shell中的常用语法</h1><div class=blog-post-subheader>April 3, 2021</div><div class=blog-post-content><h2 id=获取文件名文件扩展名>获取文件名/文件扩展名</h2><div class=highlight><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell>~% <span style=color:#111>FILE</span><span style=color:#f92672>=</span><span style=color:#d88200>&#34;example.tar.gz&#34;</span>
+<!doctype html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><link href="https://fonts.loli.net/css?family=Ubuntu" rel=stylesheet><title>Shell中的常用语法</title><link rel=stylesheet href=/css/stylesheet.css></head><body><section id=page-title><h1><a href=/>Aliens</a></h1></section><section class=blog-post><h1>Shell中的常用语法</h1><div class=blog-post-subheader>April 3, 2021</div><div class=blog-post-content><h2 id=获取文件名文件扩展名>获取文件名/文件扩展名</h2><div class=highlight><div style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">9
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell>~% <span style=color:#111>FILE</span><span style=color:#f92672>=</span><span style=color:#d88200>&#34;example.tar.gz&#34;</span>
 ~% <span style=color:#111>echo</span> <span style=color:#d88200>&#34;</span><span style=color:#d88200>${</span><span style=color:#111>FILE</span><span style=color:#111>%%.*</span><span style=color:#d88200>}</span><span style=color:#d88200>&#34;</span>
 example
 ~% <span style=color:#111>echo</span> <span style=color:#d88200>&#34;</span><span style=color:#d88200>${</span><span style=color:#111>FILE</span><span style=color:#111>%.*</span><span style=color:#d88200>}</span><span style=color:#d88200>&#34;</span>
@@ -7,22 +16,54 @@ example.tar
 tar.gz
 ~% <span style=color:#111>echo</span> <span style=color:#d88200>&#34;</span><span style=color:#d88200>${</span><span style=color:#111>FILE</span><span style=color:#111>##*.</span><span style=color:#d88200>}</span><span style=color:#d88200>&#34;</span>
 gz
-</code></pre></div><p><a href=https://stackoverflow.com/questions/965053/extract-filename-and-extension-in-bash>https://stackoverflow.com/questions/965053/extract-filename-and-extension-in-bash</a></p><h2 id=去除字符串的前缀后缀>去除字符串的前缀/后缀</h2><p>有一个字符串为<code>hello-world</code>, 现在希望去除前缀<code>hell</code>和后缀<code>ld</code>, 得到新的字符串<code>o-wor</code></p><div class=highlight><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>string=&#34;hello-world&#34;
+</code></pre></td></tr></table></div></div><p><a href=https://stackoverflow.com/questions/965053/extract-filename-and-extension-in-bash>https://stackoverflow.com/questions/965053/extract-filename-and-extension-in-bash</a></p><h2 id=去除字符串的前缀后缀>去除字符串的前缀/后缀</h2><p>有一个字符串为<code>hello-world</code>, 现在希望去除前缀<code>hell</code>和后缀<code>ld</code>, 得到新的字符串<code>o-wor</code></p><div class=highlight><div style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>string=&#34;hello-world&#34;
 prefix=&#34;hell&#34;
 suffix=&#34;ld&#34;
-</code></pre></div><p>方法如下:</p><div class=highlight><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>$ foo=${string#&#34;$prefix&#34;}
+</code></pre></td></tr></table></div></div><p>方法如下:</p><div class=highlight><div style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>$ foo=${string#&#34;$prefix&#34;}
 $ foo=${foo%&#34;$suffix&#34;}
 $ echo &#34;${foo}&#34;
 o-wor
-</code></pre></div><p><a href=https://stackoverflow.com/questions/16623835/remove-a-fixed-prefix-suffix-from-a-string-in-bash>https://stackoverflow.com/questions/16623835/remove-a-fixed-prefix-suffix-from-a-string-in-bash</a></p><h2 id=手动向stderr输出>手动向stderr输出</h2><div class=highlight><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell>&gt;<span style=color:#111>&amp;</span><span style=color:#ae81ff>2</span> <span style=color:#111>echo</span> <span style=color:#d88200>&#34;error&#34;</span>
-</code></pre></div><p><a href=https://stackoverflow.com/questions/2990414/echo-that-outputs-to-stderr>https://stackoverflow.com/questions/2990414/echo-that-outputs-to-stderr</a></p><h2 id=创建临时文件夹>创建临时文件夹</h2><div class=highlight><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=color:#75715e># 创建临时文件夹</span>
+</code></pre></td></tr></table></div></div><p><a href=https://stackoverflow.com/questions/16623835/remove-a-fixed-prefix-suffix-from-a-string-in-bash>https://stackoverflow.com/questions/16623835/remove-a-fixed-prefix-suffix-from-a-string-in-bash</a></p><h2 id=手动向stderr输出>手动向stderr输出</h2><div class=highlight><div style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell>&gt;<span style=color:#111>&amp;</span><span style=color:#ae81ff>2</span> <span style=color:#111>echo</span> <span style=color:#d88200>&#34;error&#34;</span>
+</code></pre></td></tr></table></div></div><p><a href=https://stackoverflow.com/questions/2990414/echo-that-outputs-to-stderr>https://stackoverflow.com/questions/2990414/echo-that-outputs-to-stderr</a></p><h2 id=创建临时文件夹>创建临时文件夹</h2><div class=highlight><div style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=color:#75715e># 创建临时文件夹</span>
 $ mktemp -d
 /tmp/tmp.vwjuFmclTR
 
 <span style=color:#75715e># 创建临时文件夹，并指定模板</span>
 $ mktemp -d -t test-XXXXX
 /tmp/test-4kceq
-</code></pre></div><p><a href=https://code-maven.com/create-temporary-directory-on-linux-using-bash>https://code-maven.com/create-temporary-directory-on-linux-using-bash</a></p><h2 id=判断字符串是否为空>判断字符串是否为空</h2><p>正确做法</p><div class=highlight><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=color:#75715e>#!/bin/sh
+</code></pre></td></tr></table></div></div><p><a href=https://code-maven.com/create-temporary-directory-on-linux-using-bash>https://code-maven.com/create-temporary-directory-on-linux-using-bash</a></p><h2 id=判断字符串是否为空>判断字符串是否为空</h2><p>正确做法</p><div class=highlight><div style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=color:#75715e>#!/bin/sh
 </span><span style=color:#75715e></span>
 <span style=color:#111>STRING</span><span style=color:#f92672>=</span>
 
@@ -39,7 +80,24 @@ $ mktemp -d -t test-XXXXX
 root@james-desktop:~# ./zerostring.sh
 STRING is empty
 
-</code></pre></div><p>错误做法</p><div class=highlight><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=color:#75715e>#!/bin/sh
+</code></pre></td></tr></table></div></div><p>错误做法</p><div class=highlight><div style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=color:#75715e>#!/bin/sh
 </span><span style=color:#75715e></span>
 <span style=color:#111>STRING</span><span style=color:#f92672>=</span>
 
@@ -56,4 +114,4 @@ STRING is empty
 root@james-desktop:~# ./zerostring.sh
 STRING is empty
 STRING is not empty
-</code></pre></div><p><a href=https://www.cnblogs.com/cute/archive/2011/08/26/2154137.html>https://www.cnblogs.com/cute/archive/2011/08/26/2154137.html</a></p><p>更多用法： <a href=https://www.cyberciti.biz/faq/unix-linux-bash-script-check-if-variable-is-empty/>https://www.cyberciti.biz/faq/unix-linux-bash-script-check-if-variable-is-empty/</a></p></div></section></body></html>
+</code></pre></td></tr></table></div></div><p><a href=https://www.cnblogs.com/cute/archive/2011/08/26/2154137.html>https://www.cnblogs.com/cute/archive/2011/08/26/2154137.html</a></p><p>更多用法： <a href=https://www.cyberciti.biz/faq/unix-linux-bash-script-check-if-variable-is-empty/>https://www.cyberciti.biz/faq/unix-linux-bash-script-check-if-variable-is-empty/</a></p></div></section></body></html>
