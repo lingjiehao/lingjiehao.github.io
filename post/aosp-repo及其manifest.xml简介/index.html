@@ -1,0 +1,57 @@
+<!doctype html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><link href="https://fonts.loli.net/css?family=Ubuntu" rel=stylesheet><title>AOSP Repo及其manifest</title><link rel=stylesheet href=/css/stylesheet.css></head><body><section id=page-title><h1><a href=/>Aliens</a></h1></section><section class=blog-post><h1>AOSP Repo及其manifest</h1><div class=blog-post-subheader>May 21, 2021</div><div class=blog-post-content><h2 id=manifestxml-demo>manifest.xml demo</h2><p>示例1：</p><div class=highlight><div style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-xml data-lang=xml><span style=color:#75715e>&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span style=color:#f92672>&lt;manifest&gt;</span>
+  <span style=color:#f92672>&lt;remote</span> <span style=color:#75af00>name=</span><span style=color:#d88200>&#34;github&#34;</span> <span style=color:#75af00>fetch=</span><span style=color:#d88200>&#34;https://github.com&#34;</span><span style=color:#f92672>/&gt;</span>
+  <span style=color:#f92672>&lt;remote</span> <span style=color:#75af00>name=</span><span style=color:#d88200>&#34;qcom&#34;</span> <span style=color:#75af00>fetch=</span><span style=color:#d88200>&#34;https://source.codeaurora.org/quic/la&#34;</span><span style=color:#f92672>/&gt;</span>
+  <span style=color:#f92672>&lt;default</span> <span style=color:#75af00>revision=</span><span style=color:#d88200>&#34;master&#34;</span> <span style=color:#75af00>remote=</span><span style=color:#d88200>&#34;github&#34;</span><span style=color:#f92672>/&gt;</span>
+
+  <span style=color:#f92672>&lt;project</span> <span style=color:#75af00>name=</span><span style=color:#d88200>&#34;raspberrypi/linux&#34;</span> <span style=color:#75af00>path=</span><span style=color:#d88200>&#34;rpi-linux-4.19&#34;</span> <span style=color:#75af00>revision=</span><span style=color:#d88200>&#34;rpi-4.19.y&#34;</span><span style=color:#f92672>/&gt;</span>
+  <span style=color:#f92672>&lt;project</span> <span style=color:#75af00>name=</span><span style=color:#d88200>&#34;raspberrypi/linux&#34;</span> <span style=color:#75af00>path=</span><span style=color:#d88200>&#34;rpi-linux-5.4&#34;</span> <span style=color:#75af00>revision=</span><span style=color:#d88200>&#34;rpi-5.4.y&#34;</span><span style=color:#f92672>/&gt;</span>
+  <span style=color:#f92672>&lt;project</span> <span style=color:#75af00>name=</span><span style=color:#d88200>&#34;torvalds/linux&#34;</span> <span style=color:#75af00>path=</span><span style=color:#d88200>&#34;torvalds-linux-latest&#34;</span> <span style=color:#75af00>revision=</span><span style=color:#d88200>&#34;master&#34;</span><span style=color:#f92672>/&gt;</span>
+  <span style=color:#f92672>&lt;project</span> <span style=color:#75af00>name=</span><span style=color:#d88200>&#34;MiCode/Xiaomi_Kernel_OpenSource&#34;</span> <span style=color:#75af00>path=</span><span style=color:#d88200>&#34;xiaomi-kernel-k20pro&#34;</span> <span style=color:#75af00>revision=</span><span style=color:#d88200>&#34;cepheus-q-oss&#34;</span><span style=color:#f92672>/&gt;</span>
+
+  <span style=color:#75715e>&lt;!-- qcom --&gt;</span>
+  <span style=color:#f92672>&lt;project</span> <span style=color:#75af00>name=</span><span style=color:#d88200>&#34;kernel/msm-4.19&#34;</span> <span style=color:#75af00>path=</span><span style=color:#d88200>&#34;msm-4.19&#34;</span> <span style=color:#75af00>remote=</span><span style=color:#d88200>&#34;qcom&#34;</span> <span style=color:#75af00>revision=</span><span style=color:#d88200>&#34;aosp-new/android-4.19-stable&#34;</span><span style=color:#f92672>/&gt;</span>
+
+  <span style=color:#75715e>&lt;!-- &lt;project name=&#34;openwrt-custom&#34; path=&#34;custom&#34;&gt; --&gt;</span>
+	  <span style=color:#75715e>&lt;!-- &lt;linkfile dest=&#34;build.sh&#34; src=&#34;build.sh&#34;/&gt; --&gt;</span>
+  <span style=color:#75715e>&lt;!-- &lt;/project&gt; --&gt;</span>
+<span style=color:#f92672>&lt;/manifest&gt;</span>
+</code></pre></td></tr></table></div></div><p>示例2：</p><div class=highlight><div style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-xml data-lang=xml><span style=color:#75715e>&lt;?xml version=&#34;1.0&#34; encoding=&#34;UTF-8&#34;?&gt;</span>
+<span style=color:#f92672>&lt;manifest&gt;</span>
+  <span style=color:#f92672>&lt;remote</span> <span style=color:#75af00>name=</span><span style=color:#d88200>&#34;origin&#34;</span> <span style=color:#75af00>fetch=</span><span style=color:#d88200>&#34;https://github.com&#34;</span><span style=color:#f92672>/&gt;</span>
+  <span style=color:#f92672>&lt;default</span> <span style=color:#75af00>revision=</span><span style=color:#d88200>&#34;r2s&#34;</span> <span style=color:#75af00>remote=</span><span style=color:#d88200>&#34;origin&#34;</span><span style=color:#f92672>/&gt;</span>
+
+  <span style=color:#f92672>&lt;project</span> <span style=color:#75af00>name=</span><span style=color:#d88200>&#34;openwrt/openwrt&#34;</span> <span style=color:#75af00>path=</span><span style=color:#d88200>&#34;openwrt-dev&#34;</span> <span style=color:#75af00>revision=</span><span style=color:#d88200>&#34;openwrt-21.02&#34;</span><span style=color:#f92672>/&gt;</span>
+  <span style=color:#f92672>&lt;project</span> <span style=color:#75af00>name=</span><span style=color:#d88200>&#34;lingjiehao/openwrt-custom&#34;</span> <span style=color:#75af00>path=</span><span style=color:#d88200>&#34;custom&#34;</span><span style=color:#f92672>&gt;</span>
+	  <span style=color:#f92672>&lt;linkfile</span> <span style=color:#75af00>dest=</span><span style=color:#d88200>&#34;build.sh&#34;</span> <span style=color:#75af00>src=</span><span style=color:#d88200>&#34;build.sh&#34;</span><span style=color:#f92672>/&gt;</span>
+  <span style=color:#f92672>&lt;/project&gt;</span>
+<span style=color:#f92672>&lt;/manifest&gt;</span>
+</code></pre></td></tr></table></div></div></div></section></body></html>
