@@ -1,0 +1,44 @@
+<!doctype html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><link href="https://fonts.loli.net/css?family=Ubuntu" rel=stylesheet><title>Android command-tools使用方法</title><link rel=stylesheet href=/css/stylesheet.css></head><body><section id=page-title><h1><a href=/>Aliens</a></h1></section><section class=blog-post><h1>Android command-tools使用方法</h1><div class=blog-post-subheader>May 22, 2021</div><div class=blog-post-content><p>下载地址：
+<a href=https://developer.android.com/studio/index.html#command-tools>https://developer.android.com/studio/index.html#command-tools</a></p><h2 id=sdkmanager的使用>sdkmanager的使用</h2><h3 id=下载与配置>下载与配置</h3><p><a href=https://stackoverflow.com/questions/60440509/android-command-line-tools-sdkmanager-always-shows-warning-could-not-create-se>https://stackoverflow.com/questions/60440509/android-command-line-tools-sdkmanager-always-shows-warning-could-not-create-se</a></p><p>command-tools 下载并加入到环境变量中后，并不能直接使用，还需要额外的配置。</p><ol><li><p>新建一个<code>android_sdk</code>目录，并创建子目录<code>cmdline-tools</code>。然后创建环境变量<code>ANDROID_SDK_ROOT</code>，环境变量的值为<code>android_sdk</code>目录的路径，如</p><div class=highlight><div style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell>mkdir -p ~/android_sdk/cmdline-tools
+<span style=color:#111>echo</span> <span style=color:#d88200>&#39;export ANDROID_SDK_ROOT=~/android_sdk&#39;</span> &gt;&gt; ~/.bashrc
+</code></pre></td></tr></table></div></div></li><li><p>将<code>commandlinetools-xxx-xxx_latest.zip</code>解压，得到<code>cmdline-tools</code>文件夹，并重命名为<code>tools</code></p></li><li><p>将上一步的<code>tools</code>目录移动到<code>$ANDROID_SDK_ROOT/cmdline-tools</code>下，现在的目录结构应该是：<code>$ANDROID_SDK_ROOT/cmdline-tools/tools</code>。<code>tools</code>目录下，会有<code>NOTICE.txt bin lib source.properties</code>等文件。事实上，按照<a href=https://developer.android.com/studio/command-line#tools-sdk>官方文档</a>，正确的目录结构应该是<code>android_sdk/cmdline-tools/&lt;version>/bin</code>，不过我试过了，把<code>&lt;version></code>替换成<code>tools</code>也是可以用的。</p></li><li><p>配置<code>PATH</code>，推荐这样配置：</p><div class=highlight><div style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>echo &#39;export PATH=$PATH:$ANDROID_SDK_ROOT/cmdline-tools/latest/bin:$ANDROID_SDK_ROOT/cmdline-tools/tools/bin&#39; &gt;&gt; ~/.bashrc
+</code></pre></td></tr></table></div></div><p>因为如果以后版本升级，<code>sdkmanager</code>会被放在<code>$ANDROID_SDK_ROOT/cmdline-tools/latest/bin</code>目录下，所以把<code>latest</code>目录放到较高的优先级。</p></li></ol><h3 id=通过sdkmanager安装platform-tools-build-tools-android-sdk等工具>通过sdkmanager安装platform tools, build tools, android sdk等工具</h3><p>先使用sdkmanager &ndash;list 列出所有可以下载的软件包,然后根据需要选择下载的版本。</p><div class=highlight><div style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>$ sdkmanager --list
+...
+Available Packages:
+  Path                                                                                     | Version      | Description
+  -------
+  ...                                                                       | -------      | -------
+  add-ons;addon-google_apis-google-24                                                      | 1            | Google APIs
+  build-tools;19.1.0                                                                       | 19.1.0       | Android SDK Build-Tools 19.1
+  ...
+  extras;google;m2repository                                                               | 58           | Google Repository
+  extras;google;market_apk_expansion                                                       | 1            | Google Play APK Expansion library
+  ...
+  ndk;22.0.7026061                                                                         | 22.0.7026061 | NDK (Side by side) 22.0.7026061
+  patcher;v4                                                                               | 1            | SDK Patch Applier v4
+  platform-tools                                                                           | 31.0.2       | Android SDK Platform-Tools
+  platforms;android-10                                                                     | 2            | Android SDK Platform 10
+  ...
+</code></pre></td></tr></table></div></div><p>如果需要安装 build-tools;29.0.2, 最新版的platform-tools, 那么执行如下命令:</p><div class=highlight><div style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>sdkmanger &#34;build-tools;29.0.2&#34; &#34;platform-tools&#34;
+</code></pre></td></tr></table></div></div><p>然后，将<code>$ANDROID_SDK_ROOT/build-tools/29.0.2</code>和<code>$ANDROID_SDK_ROOT/platform-tools</code>加入<code>PATH</code>即可使用这两个工具。</p></div></section></body></html>
