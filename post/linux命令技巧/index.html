@@ -13,7 +13,11 @@ tar --use-compress-program<span style=color:#f92672>=</span><span style=color:#d
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
 </span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell>curl -sSL http://mywebsite.com/myscript.txt <span style=color:#111>|</span> bash
+<span style=color:#75715e># 或者</span>
+wget -qO- http://mywebsite.com/myscript.txt <span style=color:#111>|</span> bash
 <span style=color:#75715e># 或者</span>
 bash &lt;<span style=color:#f92672>(</span>wget -qO- http://mywebsite.com/myscript.txt<span style=color:#f92672>)</span>
 <span style=color:#75715e># 或者</span>
