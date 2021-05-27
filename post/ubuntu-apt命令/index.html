@@ -1,0 +1,9 @@
+<!doctype html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><link href="https://fonts.loli.net/css?family=Ubuntu" rel=stylesheet><title>Ubuntu Apt命令</title><link rel=stylesheet href=/css/stylesheet.css></head><body><section id=page-title><h1><a href=/>Aliens</a></h1></section><section class=blog-post><h1>Ubuntu Apt命令</h1><div class=blog-post-subheader>May 27, 2021</div><div class=blog-post-content><h2 id=安装时默认---no-install-recommends>安装时默认 &ndash;no-install-recommends</h2><div class=highlight><div style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell>cat &gt; /etc/apt/apt.conf.d/01norecommend <span style=color:#d88200>&lt;&lt; EOF
+</span><span style=color:#d88200>APT::Install-Recommends &#34;0&#34;;
+</span><span style=color:#d88200>APT::Install-Suggests &#34;0&#34;;
+</span><span style=color:#d88200>EOF</span>
+</code></pre></td></tr></table></div></div><p><a href=https://superuser.com/questions/615565/can-i-make-apt-get-always-use-no-install-recommends>https://superuser.com/questions/615565/can-i-make-apt-get-always-use-no-install-recommends</a></p></div></section></body></html>
