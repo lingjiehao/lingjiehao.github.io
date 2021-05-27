@@ -79,8 +79,8 @@
 <span style=color:#111>{</span>
     <span style=color:#111>queue_work</span><span style=color:#111>(</span><span style=color:#111>pdata</span><span style=color:#f92672>-&gt;</span><span style=color:#111>wq</span><span style=color:#111>,</span> <span style=color:#f92672>&amp;</span><span style=color:#111>pdata</span><span style=color:#f92672>-&gt;</span><span style=color:#111>some_work</span><span style=color:#111>)</span> <span style=color:#111>;</span>
 <span style=color:#111>}</span>
-</code></pre></td></tr></table></div></div><h2 id=使用delayed-workqueue>使用delayed workqueue</h2><p>有时候，我们需要一个work在一段时间后才执行，这时候便可以使用delayed work。delayed workqueue与普通的workqueue在使用上差别并不大，
-从delayed workqueue的结构体定义就可以看出。</p><div class=highlight><div style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</code></pre></td></tr></table></div></div><h2 id=使用-delayed-workqueue>使用 delayed workqueue</h2><p>有时候，我们需要一个 work 在一段时间后才执行，这时候便可以使用 delayed work 。delayed workqueue 与普通的 workqueue 在使用上差别并不大，
+从 delayed workqueue 的结构体定义就可以看出。</p><div class=highlight><div style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
@@ -152,7 +152,7 @@
     <span style=color:#111>INIT_DELAYED_WORK</span><span style=color:#111>(</span><span style=color:#f92672>&amp;</span><span style=color:#111>pdata</span><span style=color:#f92672>-&gt;</span><span style=color:#111>some_delayed_work</span><span style=color:#111>,</span> <span style=color:#111>lt9611_some_delayed_work</span><span style=color:#111>)</span> <span style=color:#111>;</span>
 <span style=color:#111>...</span>
 <span style=color:#111>}</span>
-</code></pre></td></tr></table></div></div><p>使用<code>queue_delayed_work</code>调用需要的delayed_work：</p><div class=highlight><div style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</code></pre></td></tr></table></div></div><p>使用 <code>queue_delayed_work</code> 调用需要的 delayed_work ：</p><div class=highlight><div style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
@@ -164,5 +164,5 @@
                             <span style=color:#111>msecs_to_jiffies</span><span style=color:#111>(</span><span style=color:#ae81ff>300</span><span style=color:#111>))</span> <span style=color:#111>;</span>
     <span style=color:#111>...</span>
 <span style=color:#111>}</span>
-</code></pre></td></tr></table></div></div><p>和普通的work相比，除了初始化和调用的方式不同外，有一点需要格外注意：</p><blockquote><p>work和delayed_work对应的回调函数都是: <code>void (*func)(struct work_struct *)</code>，<code>delayed_work</code>回调函数的入参并<strong>不是</strong><code>struct delayed_work *</code>。
-因此，在其回调函数中，需要两次调用<code>container_of</code>来获得包含<code>delayed_work</code>的结构体的地址。</p></blockquote><h2 id=参考>参考</h2><p><a href=https://blog.csdn.net/heanyu/article/details/6899679>https://blog.csdn.net/heanyu/article/details/6899679</a></p></div></section></body></html>
+</code></pre></td></tr></table></div></div><p>和普通的 work 相比，除了初始化和调用的方式不同外，有一点需要格外注意：</p><blockquote><p>work 和 delayed_work 对应的回调函数都是: <code>void (*func)(struct work_struct *)</code>，<code>delayed_work</code> 回调函数的入参并<strong>不是</strong> <code>struct delayed_work *</code>。
+因此，在其回调函数中，需要两次调用 <code>container_of</code> 来获得包含 <code>delayed_work</code> 的结构体的地址。</p></blockquote><h2 id=参考>参考</h2><p><a href=https://blog.csdn.net/heanyu/article/details/6899679>https://blog.csdn.net/heanyu/article/details/6899679</a></p></div></section></body></html>
