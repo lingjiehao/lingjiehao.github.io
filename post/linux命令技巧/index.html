@@ -8,4 +8,25 @@
 
 <span style=color:#75715e># 显示压缩进度</span>
 tar --use-compress-program<span style=color:#f92672>=</span><span style=color:#d88200>&#34;pigz --best --recursive | pv&#34;</span> -cf archive.tar.gz YourData
-</code></pre></td></tr></table></div></div><p><a href=https://stackoverflow.com/questions/36917882/how-to-use-pigz-with-tar>https://stackoverflow.com/questions/36917882/how-to-use-pigz-with-tar</a></p></div></section></body></html>
+</code></pre></td></tr></table></div></div><p><a href=https://stackoverflow.com/questions/36917882/how-to-use-pigz-with-tar>https://stackoverflow.com/questions/36917882/how-to-use-pigz-with-tar</a></p><h2 id=运行来自url的shell脚本>运行来自url的shell脚本</h2><p>以下命令仅在bash中测试过：</p><p>不带参数：</p><div class=highlight><div style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell>curl -sSL http://mywebsite.com/myscript.txt <span style=color:#111>|</span> bash
+<span style=color:#75715e># 或者</span>
+bash &lt;<span style=color:#f92672>(</span>wget -qO- http://mywebsite.com/myscript.txt<span style=color:#f92672>)</span>
+<span style=color:#75715e># 或者</span>
+<span style=color:#111>source</span> &lt;<span style=color:#f92672>(</span>curl -s http://mywebsite.com/myscript.txt<span style=color:#f92672>)</span>
+</code></pre></td></tr></table></div></div><p>带参数：</p><div class=highlight><div style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell>curl -sSL http://mywebsite.com/myscript.txt <span style=color:#111>|</span> bash -s arg1 arg2
+<span style=color:#75715e># 或者</span>
+curl -sSL http://mywebsite.com/myscript.txt <span style=color:#111>|</span> bash -s -- arg1 arg2
+<span style=color:#75715e># 或者</span>
+curl -sSL http://mywebsite.com/myscript.txt <span style=color:#111>|</span> bash /dev/stdin arg1 arg2
+</code></pre></td></tr></table></div></div><p><a href=https://stackoverflow.com/questions/5735666/execute-bash-script-from-url>https://stackoverflow.com/questions/5735666/execute-bash-script-from-url</a>
+<a href=https://unix.stackexchange.com/questions/622213/pass-args-to-bash-script-from-git-using-curl>https://unix.stackexchange.com/questions/622213/pass-args-to-bash-script-from-git-using-curl</a></p></div></section></body></html>
