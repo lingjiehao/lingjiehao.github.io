@@ -1,0 +1,168 @@
+<!doctype html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><link href="https://fonts.loli.net/css?family=Ubuntu" rel=stylesheet><title>Kernel 工作队列</title><link rel=stylesheet href=/css/stylesheet.css></head><body><section id=page-title><h1><a href=/>Aliens</a></h1></section><section class=blog-post><h1>Kernel 工作队列</h1><div class=blog-post-subheader>May 25, 2021</div><div class=blog-post-content><p>内核版本: 4.15</p><p>调度一个 work，首先需要定义一个 workqueue，然后将这个 work 放入到这个 workqueue 中。
+当我们希望调度一个 work 时，可以有两种方法：</p><ol><li>内核会为每一个 cpu 创建一个默认的 workqueue，可以用 schedule_work 函数将 work 加入到默认的 workqueue 中；</li><li>当默认的 workqueue 任务太重时，为了加快响应，我们可以自定义一个 workqueue，然后使用 queue_work 函数将 work 加入到自定义的 workqueue 中。</li></ol><h2 id=使用自定义的-workqueue>使用自定义的 workqueue</h2><div class=highlight><div style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#00a8c8>struct</span> <span style=color:#111>work_struct</span> <span style=color:#111>{</span>
+<span style=color:#75715e>/*	atomic_long_t data; */</span>
+	<span style=color:#00a8c8>unsigned</span> <span style=color:#00a8c8>long</span> <span style=color:#111>data</span><span style=color:#111>;</span>
+
+	<span style=color:#00a8c8>struct</span> <span style=color:#111>list_head</span> <span style=color:#111>entry</span><span style=color:#111>;</span>
+	<span style=color:#111>work_func_t</span> <span style=color:#111>func</span><span style=color:#111>;</span>
+<span style=color:#75715e>#ifdef CONFIG_LOCKDEP
+</span><span style=color:#75715e></span>	<span style=color:#00a8c8>struct</span> <span style=color:#111>lockdep_map</span> <span style=color:#111>lockdep_map</span><span style=color:#111>;</span>
+<span style=color:#75715e>#endif
+</span><span style=color:#75715e></span><span style=color:#111>};</span>
+</code></pre></td></tr></table></div></div><p>使用前进行必要的初始化：</p><div class=highlight><div style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#00a8c8>struct</span> <span style=color:#111>lt9611</span> <span style=color:#111>{</span>
+    <span style=color:#00a8c8>struct</span> <span style=color:#111>workqueue_struct</span> <span style=color:#f92672>*</span><span style=color:#111>wq</span><span style=color:#111>;</span>
+    <span style=color:#00a8c8>struct</span> <span style=color:#111>work_struct</span> <span style=color:#111>some_work</span><span style=color:#111>;</span>
+    <span style=color:#111>...</span>
+<span style=color:#111>};</span>
+
+<span style=color:#00a8c8>static</span> <span style=color:#00a8c8>void</span> <span style=color:#75af00>lt9611_some_work</span><span style=color:#111>(</span><span style=color:#00a8c8>struct</span> <span style=color:#111>work_struct</span> <span style=color:#f92672>*</span><span style=color:#111>work</span><span style=color:#111>)</span>
+<span style=color:#111>{</span>
+    <span style=color:#00a8c8>struct</span> <span style=color:#111>lt9611</span> <span style=color:#f92672>*</span><span style=color:#111>pdata</span> <span style=color:#f92672>=</span> <span style=color:#111>container_of</span><span style=color:#111>(</span><span style=color:#111>work</span><span style=color:#111>,</span> <span style=color:#00a8c8>struct</span> <span style=color:#111>lt9611</span><span style=color:#111>,</span> <span style=color:#111>some_work</span><span style=color:#111>)</span> <span style=color:#111>;</span>
+    <span style=color:#111>...</span>
+<span style=color:#111>}</span>
+
+<span style=color:#00a8c8>static</span> <span style=color:#00a8c8>int</span> <span style=color:#75af00>lt9611_probe</span> <span style=color:#111>(</span><span style=color:#00a8c8>struct</span> <span style=color:#111>i2c_client</span> <span style=color:#f92672>*</span><span style=color:#111>client</span><span style=color:#111>,</span>
+    <span style=color:#00a8c8>const</span> <span style=color:#00a8c8>struct</span> <span style=color:#111>i2c_device_id</span> <span style=color:#f92672>*</span><span style=color:#111>id</span><span style=color:#111>)</span>
+<span style=color:#111>{</span>
+    <span style=color:#00a8c8>struct</span> <span style=color:#111>lt9611</span> <span style=color:#f92672>*</span><span style=color:#111>pdata</span><span style=color:#111>;</span>
+<span style=color:#111>...</span>
+    <span style=color:#111>pdata</span><span style=color:#f92672>-&gt;</span><span style=color:#111>wq</span> <span style=color:#f92672>=</span> <span style=color:#111>create_singlethread_workqueue</span> <span style=color:#111>(</span><span style=color:#d88200>&#34;lt9611_wq&#34;</span><span style=color:#111>)</span> <span style=color:#111>;</span>
+    <span style=color:#00a8c8>if</span> <span style=color:#111>(</span><span style=color:#f92672>!</span><span style=color:#111>pdata</span><span style=color:#f92672>-&gt;</span><span style=color:#111>wq</span><span style=color:#111>)</span> <span style=color:#111>{</span>
+        <span style=color:#111>pr_err</span> <span style=color:#111>(</span><span style=color:#d88200>&#34;lt9611: fail to create workqueue&#34;</span><span style=color:#111>)</span> <span style=color:#111>;</span>
+        <span style=color:#00a8c8>goto</span> <span style=color:#111>err</span><span style=color:#111>;</span>
+    <span style=color:#111>}</span>
+
+    <span style=color:#111>INIT_WORK</span><span style=color:#111>(</span><span style=color:#f92672>&amp;</span><span style=color:#111>pdata</span><span style=color:#f92672>-&gt;</span><span style=color:#111>some_work</span><span style=color:#111>,</span> <span style=color:#111>lt9611_some_work</span><span style=color:#111>)</span> <span style=color:#111>;</span>
+<span style=color:#111>...</span>
+<span style=color:#111>}</span>
+</code></pre></td></tr></table></div></div><p>使用 <code>queue_work</code> 调用需要的 work：</p><div class=highlight><div style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#00a8c8>static</span> <span style=color:#00a8c8>void</span> <span style=color:#75af00>foo_func</span> <span style=color:#111>(</span><span style=color:#00a8c8>struct</span> <span style=color:#111>lt9611</span> <span style=color:#f92672>*</span><span style=color:#111>pdata</span><span style=color:#111>)</span>
+<span style=color:#111>{</span>
+    <span style=color:#111>queue_work</span><span style=color:#111>(</span><span style=color:#111>pdata</span><span style=color:#f92672>-&gt;</span><span style=color:#111>wq</span><span style=color:#111>,</span> <span style=color:#f92672>&amp;</span><span style=color:#111>pdata</span><span style=color:#f92672>-&gt;</span><span style=color:#111>some_work</span><span style=color:#111>)</span> <span style=color:#111>;</span>
+<span style=color:#111>}</span>
+</code></pre></td></tr></table></div></div><h2 id=使用delayed-workqueue>使用delayed workqueue</h2><p>有时候，我们需要一个work在一段时间后才执行，这时候便可以使用delayed work。delayed workqueue与普通的workqueue在使用上差别并不大，
+从delayed workqueue的结构体定义就可以看出。</p><div class=highlight><div style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#00a8c8>struct</span> <span style=color:#111>delayed_work</span> <span style=color:#111>{</span>
+	<span style=color:#00a8c8>struct</span> <span style=color:#111>work_struct</span> <span style=color:#111>work</span><span style=color:#111>;</span>
+	<span style=color:#00a8c8>struct</span> <span style=color:#111>timer_list</span> <span style=color:#111>timer</span><span style=color:#111>;</span>
+
+	<span style=color:#75715e>/* target workqueue and CPU -&gt;timer uses to queue -&gt;work */</span>
+	<span style=color:#00a8c8>struct</span> <span style=color:#111>workqueue_struct</span> <span style=color:#f92672>*</span><span style=color:#111>wq</span><span style=color:#111>;</span>
+	<span style=color:#00a8c8>int</span> <span style=color:#111>cpu</span><span style=color:#111>;</span>
+<span style=color:#111>};</span>
+</code></pre></td></tr></table></div></div><p>使用前进行必要的初始化：</p><div class=highlight><div style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#00a8c8>struct</span> <span style=color:#111>lt9611</span> <span style=color:#111>{</span>
+    <span style=color:#00a8c8>struct</span> <span style=color:#111>workqueue_struct</span> <span style=color:#f92672>*</span><span style=color:#111>wq</span><span style=color:#111>;</span>
+    <span style=color:#00a8c8>struct</span> <span style=color:#111>work_struct</span> <span style=color:#111>some_delayed_work</span><span style=color:#111>;</span>
+    <span style=color:#111>...</span>
+<span style=color:#111>};</span>
+
+<span style=color:#00a8c8>static</span> <span style=color:#00a8c8>void</span> <span style=color:#75af00>lt9611_some_work</span> <span style=color:#111>(</span> <span style=color:#00a8c8>struct</span> <span style=color:#111>work_struct</span> <span style=color:#f92672>*</span><span style=color:#111>work</span> <span style=color:#111>)</span>
+<span style=color:#111>{</span>
+    <span style=color:#75715e>/* 注意这里的to_delayed_work(work) */</span>
+    <span style=color:#00a8c8>struct</span> <span style=color:#111>lt9611</span> <span style=color:#f92672>*</span><span style=color:#111>pdata</span> <span style=color:#f92672>=</span> <span style=color:#111>container_of</span><span style=color:#111>(</span><span style=color:#111>to_delayed_work</span><span style=color:#111>(</span><span style=color:#111>work</span><span style=color:#111>),</span>
+                        <span style=color:#00a8c8>struct</span> <span style=color:#111>lt9611</span><span style=color:#111>,</span> <span style=color:#111>some_delayed_work</span> <span style=color:#111>)</span> <span style=color:#111>;</span>
+    <span style=color:#111>...</span>
+<span style=color:#111>}</span>
+
+<span style=color:#00a8c8>static</span> <span style=color:#00a8c8>int</span> <span style=color:#75af00>lt9611_probe</span> <span style=color:#111>(</span> <span style=color:#00a8c8>struct</span> <span style=color:#111>i2c_client</span> <span style=color:#f92672>*</span><span style=color:#111>client</span><span style=color:#111>,</span>
+    <span style=color:#00a8c8>const</span> <span style=color:#00a8c8>struct</span> <span style=color:#111>i2c_device_id</span> <span style=color:#f92672>*</span><span style=color:#111>id</span> <span style=color:#111>)</span>
+<span style=color:#111>{</span>
+    <span style=color:#00a8c8>struct</span> <span style=color:#111>lt9611</span> <span style=color:#f92672>*</span><span style=color:#111>pdata</span><span style=color:#111>;</span>
+<span style=color:#111>...</span>
+    <span style=color:#111>pdata</span><span style=color:#f92672>-&gt;</span><span style=color:#111>wq</span> <span style=color:#f92672>=</span> <span style=color:#111>create_singlethread_workqueue</span> <span style=color:#111>(</span> <span style=color:#d88200>&#34;lt9611_wq&#34;</span> <span style=color:#111>)</span> <span style=color:#111>;</span>
+    <span style=color:#00a8c8>if</span> <span style=color:#111>(</span> <span style=color:#f92672>!</span><span style=color:#111>pdata</span><span style=color:#f92672>-&gt;</span><span style=color:#111>wq</span> <span style=color:#111>)</span> <span style=color:#111>{</span>
+        <span style=color:#111>pr_err</span> <span style=color:#111>(</span> <span style=color:#d88200>&#34;lt9611: fail to create workqueue&#34;</span> <span style=color:#111>)</span> <span style=color:#111>;</span>
+        <span style=color:#00a8c8>goto</span> <span style=color:#111>err</span><span style=color:#111>;</span>
+    <span style=color:#111>}</span>
+
+    <span style=color:#111>INIT_DELAYED_WORK</span><span style=color:#111>(</span><span style=color:#f92672>&amp;</span><span style=color:#111>pdata</span><span style=color:#f92672>-&gt;</span><span style=color:#111>some_delayed_work</span><span style=color:#111>,</span> <span style=color:#111>lt9611_some_delayed_work</span><span style=color:#111>)</span> <span style=color:#111>;</span>
+<span style=color:#111>...</span>
+<span style=color:#111>}</span>
+</code></pre></td></tr></table></div></div><p>使用<code>queue_delayed_work</code>调用需要的delayed_work：</p><div class=highlight><div style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#00a8c8>static</span> <span style=color:#00a8c8>void</span> <span style=color:#75af00>bar_func</span> <span style=color:#111>(</span><span style=color:#00a8c8>struct</span> <span style=color:#111>lt9611</span> <span style=color:#f92672>*</span><span style=color:#111>pdata</span><span style=color:#111>)</span>
+<span style=color:#111>{</span>
+    <span style=color:#111>queue_delayed_work</span><span style=color:#111>(</span><span style=color:#111>pdata</span><span style=color:#f92672>-&gt;</span><span style=color:#111>wq</span><span style=color:#111>,</span> <span style=color:#f92672>&amp;</span><span style=color:#111>pdata</span><span style=color:#f92672>-&gt;</span><span style=color:#111>some_delayed_work</span><span style=color:#111>,</span>
+                            <span style=color:#111>msecs_to_jiffies</span><span style=color:#111>(</span><span style=color:#ae81ff>300</span><span style=color:#111>))</span> <span style=color:#111>;</span>
+    <span style=color:#111>...</span>
+<span style=color:#111>}</span>
+</code></pre></td></tr></table></div></div><p>和普通的work相比，除了初始化和调用的方式不同外，有一点需要格外注意：</p><blockquote><p>work和delayed_work对应的回调函数都是: <code>void (*func)(struct work_struct *)</code>，<code>delayed_work</code>回调函数的入参并<strong>不是</strong><code>struct delayed_work *</code>。
+因此，在其回调函数中，需要两次调用<code>container_of</code>来获得包含<code>delayed_work</code>的结构体的地址。</p></blockquote><h2 id=参考>参考</h2><p><a href=https://blog.csdn.net/heanyu/article/details/6899679>https://blog.csdn.net/heanyu/article/details/6899679</a></p></div></section></body></html>
