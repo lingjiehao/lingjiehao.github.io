@@ -21,7 +21,7 @@ command-tools 下载并加入到环境变量中后，并不能直接使用，还
 1 sudo chmod +x /usr/local/bin/docker-compose 添加bash-completion（可选）
 1 2 3 sudo curl \ -L https://raw.githubusercontent.com/docker/compose/1.29.1/contrib/completion/bash/docker-compose \ -o /etc/bash_completion.d/docker-compose https://docs.docker.com/compose/install/#install-compose-on-linux-systems
 https://docs.docker.com/compose/completion/#install-command-completion
-使用 namespace remap 首先需要修改 /etc/subuid 和 /etc/subgid，</description></item><item><title>Vim常用操作</title><link>https://blog.mypri.cloud/post/vim%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/</link><pubDate>Sat, 24 Apr 2021 15:44:48 +0800</pubDate><guid>https://blog.mypri.cloud/post/vim%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/</guid><description>编辑二进制文件 https://vi.stackexchange.com/questions/343/how-to-edit-binary-files-with-vim
+使用 namespace remap 配置 首先需要修改 /etc/subuid 和 /etc/subgid，</description></item><item><title>Vim常用操作</title><link>https://blog.mypri.cloud/post/vim%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/</link><pubDate>Sat, 24 Apr 2021 15:44:48 +0800</pubDate><guid>https://blog.mypri.cloud/post/vim%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/</guid><description>编辑二进制文件 https://vi.stackexchange.com/questions/343/how-to-edit-binary-files-with-vim
 打开并编辑二进制文件, 可以使用 xxd 命令
 1 xxd test.bin | vim - 如果这个二进制文件已经被 vim 打开(一般显示为乱码), 则重载这个文件
 1 :%!xxd 保存为二进制
