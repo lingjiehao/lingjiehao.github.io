@@ -82,5 +82,5 @@ index fd6432f..8e8d1e3 100755
 +
 +TARGET_RECOVERY_DEFAULT_ROTATION := ROTATION_LEFT
 
-</code></pre></td></tr></table></div></div><p>然后 <code>make recoveryimage</code>，单编 <code>recovery.img</code>，打包前的 recovery 根文件系统可以在<code>&lt;src-root>/out/target/product/rm510/recovery</code>中看到，
-最终<code>ro.minui.pixel_format=ROTATION_LEFT</code>可以在<code>&lt;src-root>/out/target/product/rm510/recovery/root/default.prop</code>看到</p><h2 id=参考文档>参考文档</h2><p><a href=https://android.stackexchange.com/questions/216368/how-to-use-setprop-via-adb-shell-in-recovery>https://android.stackexchange.com/questions/216368/how-to-use-setprop-via-adb-shell-in-recovery</a></p></div></section></body></html>
+</code></pre></td></tr></table></div></div><p>然后 <code>make recoveryimage</code>，单编 <code>recovery.img</code>，打包前的 recovery 根文件系统可以在<code>&lt;src-root>/out/target/product/&lt;product-name>/recovery</code>中看到，
+最终<code>ro.minui.pixel_format=ROTATION_LEFT</code>可以在<code>&lt;src-root>/out/target/product/&lt;product-name>/recovery/root/default.prop</code>看到</p><h2 id=参考文档>参考文档</h2><p><a href=https://android.stackexchange.com/questions/216368/how-to-use-setprop-via-adb-shell-in-recovery>https://android.stackexchange.com/questions/216368/how-to-use-setprop-via-adb-shell-in-recovery</a></p></div></section></body></html>
