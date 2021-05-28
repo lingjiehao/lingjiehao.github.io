@@ -1,0 +1,86 @@
+<!doctype html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><link href="https://fonts.loli.net/css?family=Ubuntu" rel=stylesheet><title>Android:设置recovery的默认显示方向</title><link rel=stylesheet href=/css/stylesheet.css></head><body><section id=page-title><h1><a href=/>Aliens</a></h1></section><section class=blog-post><h1>Android:设置recovery的默认显示方向</h1><div class=blog-post-subheader>May 27, 2021</div><div class=blog-post-content><p>平台：Android 10</p><h2 id=方法>方法</h2><p>recovery 的方向可以通过 <code>ro.minui.default_rotation</code> 这个属性来控制，<code>ro.minui.default_rotation</code> 在 <code>minui/graphics.cpp</code> 中的 <code>gr_init()</code> 函数被解析。</p><p><a href="https://source.codeaurora.cn/quic/la/platform/bootable/recovery/tree/minui/graphics.cpp?h=LA.UM.8.12.3.1#n344">代码如下</a>：</p><div class=highlight><div style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-cpp data-lang=cpp><span style=color:#00a8c8>int</span> <span style=color:#75af00>gr_init</span><span style=color:#111>()</span> <span style=color:#111>{</span>
+<span style=color:#111>...</span>
+  <span style=color:#111>std</span><span style=color:#f92672>::</span><span style=color:#111>string</span> <span style=color:#111>rotation_str</span> <span style=color:#f92672>=</span>
+      <span style=color:#111>android</span><span style=color:#f92672>::</span><span style=color:#111>base</span><span style=color:#f92672>::</span><span style=color:#111>GetProperty</span><span style=color:#111>(</span><span style=color:#d88200>&#34;ro.minui.default_rotation&#34;</span><span style=color:#111>,</span> <span style=color:#d88200>&#34;ROTATION_NONE&#34;</span><span style=color:#111>);</span>
+  <span style=color:#00a8c8>if</span> <span style=color:#111>(</span><span style=color:#111>rotation_str</span> <span style=color:#f92672>==</span> <span style=color:#d88200>&#34;ROTATION_RIGHT&#34;</span><span style=color:#111>)</span> <span style=color:#111>{</span>
+    <span style=color:#111>gr_rotate</span><span style=color:#111>(</span><span style=color:#111>GRRotation</span><span style=color:#f92672>::</span><span style=color:#111>RIGHT</span><span style=color:#111>);</span>
+  <span style=color:#111>}</span> <span style=color:#00a8c8>else</span> <span style=color:#00a8c8>if</span> <span style=color:#111>(</span><span style=color:#111>rotation_str</span> <span style=color:#f92672>==</span> <span style=color:#d88200>&#34;ROTATION_DOWN&#34;</span><span style=color:#111>)</span> <span style=color:#111>{</span>
+    <span style=color:#111>gr_rotate</span><span style=color:#111>(</span><span style=color:#111>GRRotation</span><span style=color:#f92672>::</span><span style=color:#111>DOWN</span><span style=color:#111>);</span>
+  <span style=color:#111>}</span> <span style=color:#00a8c8>else</span> <span style=color:#00a8c8>if</span> <span style=color:#111>(</span><span style=color:#111>rotation_str</span> <span style=color:#f92672>==</span> <span style=color:#d88200>&#34;ROTATION_LEFT&#34;</span><span style=color:#111>)</span> <span style=color:#111>{</span>
+    <span style=color:#111>gr_rotate</span><span style=color:#111>(</span><span style=color:#111>GRRotation</span><span style=color:#f92672>::</span><span style=color:#111>LEFT</span><span style=color:#111>);</span>
+  <span style=color:#111>}</span> <span style=color:#00a8c8>else</span> <span style=color:#111>{</span>  <span style=color:#75715e>// &#34;ROTATION_NONE&#34; or unknown string
+</span><span style=color:#75715e></span>    <span style=color:#111>gr_rotate</span><span style=color:#111>(</span><span style=color:#111>GRRotation</span><span style=color:#f92672>::</span><span style=color:#111>NONE</span><span style=color:#111>);</span>
+  <span style=color:#111>}</span>
+<span style=color:#111>...</span>
+<span style=color:#111>}</span>
+</code></pre></td></tr></table></div></div><p>可以在 <code>&lt;src-root>/device/qcom/kona/BoardConfig.mk</code> 添加如下定义，实现对 <code>ro.minui.default_rotation</code>属性的修改：</p><div class=highlight><div style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">9
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-diff data-lang=diff>diff --git a/BoardConfig.mk b/BoardConfig.mk
+index fd6432f..8e8d1e3 100755
+--- a/BoardConfig.mk
++++ b/BoardConfig.mk
+@@ -250,3 +250,5 @@ BUILD_BROKEN_DUP_RULES := true
+ BUILD_BROKEN_PHONY_TARGETS := true
++
++TARGET_RECOVERY_DEFAULT_ROTATION := ROTATION_LEFT
+
+</code></pre></td></tr></table></div></div><h2 id=分析过程>分析过程</h2><p>在看到 <code>ro.minui.default_rotation</code> 可以修改方向后，最直接的方式当然是直接在类似 <code>system.prop</code>, <code>default.prop</code>, <code>build.prop</code> 之类的文件中直接添加对应的属性就好了。
+但考虑到 recovery 和 Android 是两个独立的系统，recovery 所使用的根文件系统都在 recovery.img 中，所以，第一步的任务就是需要确认到底应该把
+<code>ro.minui.default_rotation</code> 加在哪里。</p><p>在<code>gr_init()</code> 函数中，解析了很多 <code>ro.miui.*</code> 的属性，因此，我想到了可以看看别人是在哪里定义这些属性的</p><p>先进入 recovery 模式：</p><div class=highlight><div style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>adb reboot recovery
+</code></pre></td></tr></table></div></div><p>然后查看有关 <code>miui</code>的属性：</p><div class=highlight><div style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>adb shell
+$ getprop | grep minui
+[ro.minui.pixel_format]: [RGBX_8888]
+</code></pre></td></tr></table></div></div><p>对于高通平台，一般而言，设备的属性等配置会放在以下几个位置：</p><ul><li><code>&lt;src-root>/device/qcom</code>；</li><li><code>&lt;src-root>/vendor/qcom/proprietary</code></li><li><code>&lt;src-root>/build</code></li></ul><p>于是：</p><ul><li>在<code>&lt;src-root>/device/qcom</code>中搜索<code>ro.minui.pixel_format</code>这个字符串，没有搜到；</li><li>在<code>&lt;src-root>/vendor/qcom/proprietary</code>中搜索<code>ro.minui.pixel_format</code>这个字符串，没有搜到；</li><li>在<code>&lt;src-root>/build</code>中搜索<code>ro.minui.pixel_format</code>这个字符串，搜到了下面<a href="https://source.codeaurora.cn/quic/la/platform/build/tree/core/Makefile?h=LA.UM.8.12.3.1#n189">这行</a>：<div class=highlight><div style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>make/core/Makefile
+190:    ro.minui.pixel_format=$(TARGET_RECOVERY_PIXEL_FORMAT)
+</code></pre></td></tr></table></div></div></li></ul><p>很显然，只需要定义<code>TARGET_RECOVERY_PIXEL_FORMAT</code>，就可以了。</p><p>对于高通平台，绝大部分控制编译的宏都被放在了<code>&lt;src-root>/device/qcom</code>下，还有极少部分会放在<code>&lt;src-root>/vendor/qcom/proprietary</code>下。</p><p>在<code>&lt;src-root>/device/qcom</code>中搜索<code>RGBX_8888</code>这个字符串，搜到了下面这行：</p><div class=highlight><div style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>sdm845/BoardConfig.mk
+137:TARGET_RECOVERY_PIXEL_FORMAT := RGBX_8888
+</code></pre></td></tr></table></div></div><p>我们的平台是<code>kona</code>而非<code>sdm845</code>，不过我可以模仿它，在<code>kona/BoardConfig.mk</code>中增加<code>TARGET_RECOVERY_PIXEL_FORMAT</code>的定义</p><div class=highlight><div style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">9
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-diff data-lang=diff>diff --git a/BoardConfig.mk b/BoardConfig.mk
+index fd6432f..8e8d1e3 100755
+--- a/BoardConfig.mk
++++ b/BoardConfig.mk
+@@ -250,3 +250,5 @@ BUILD_BROKEN_DUP_RULES := true
+ BUILD_BROKEN_PHONY_TARGETS := true
++
++TARGET_RECOVERY_DEFAULT_ROTATION := ROTATION_LEFT
+
+</code></pre></td></tr></table></div></div><p>然后 <code>make recoveryimage</code>，单编 <code>recovery.img</code>，打包前的 recovery 根文件系统可以在<code>&lt;src-root>/out/target/product/rm510/recovery</code>中看到，
+最终<code>ro.minui.pixel_format=ROTATION_LEFT</code>可以在<code>&lt;src-root>/out/target/product/rm510/recovery/root/default.prop</code>看到</p></div></section></body></html>
