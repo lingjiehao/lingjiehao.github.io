@@ -9,7 +9,11 @@
 <span style=color:#75715e># 显示压缩进度</span>
 tar --use-compress-program<span style=color:#f92672>=</span><span style=color:#d88200>&#34;pigz --best --recursive | pv&#34;</span> -cf archive.tar.gz YourData
 </code></pre></td></tr></table></div></div><p><a href=https://stackoverflow.com/questions/36917882/how-to-use-pigz-with-tar>https://stackoverflow.com/questions/36917882/how-to-use-pigz-with-tar</a></p><h2 id=wget-命令>wget 命令</h2><p>将下载的结果输出到命令行：</p><div class=highlight><div style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
-</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell>wget -qO /dev/null http://whatever.com/page.php
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell>wget -qO- http://whatever.com/page.php
+<span style=color:#75715e># 或者</span>
+wget -qO /dev/null http://whatever.com/page.php
 </code></pre></td></tr></table></div></div><p><a href=https://superuser.com/questions/321240/how-do-you-redirect-wget-response-to-standard-out>https://superuser.com/questions/321240/how-do-you-redirect-wget-response-to-standard-out</a></p><h2 id=运行来自url的shell脚本>运行来自url的shell脚本</h2><p>以下命令仅在bash中测试过：</p><p>不带参数：</p><div class=highlight><div style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
