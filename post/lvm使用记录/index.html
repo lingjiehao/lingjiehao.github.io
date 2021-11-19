@@ -46,4 +46,14 @@ resize2fs -p /dev/vg1/test1
 </span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
 </span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=color:#75715e># 向vg1中添加新的PV:/dev/sdc1</span>
 vgextend vg1 /dev/sdc1
+</code></pre></td></tr></table></div></div><h2 id=缩减空间>缩减空间</h2><hr><h3 id=移除部分pv>移除部分PV</h3><p>假设vg1中有两个pv，分别为<code>/dev/sda1</code>和<code>/dev/sdb1</code>，现需要将<code>/dev/sdb1</code>从vg1中移除</p><div class=highlight><div style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=color:#75715e># 先转移/dev/sdb1中的数据</span>
+pvmove /dev/sdb1
+
+<span style=color:#75715e># 从vg1中移除/dev/sdb1</span>
+vgreduce vg1 /dev/sdb1
 </code></pre></td></tr></table></div></div></div></section></body></html>
