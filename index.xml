@@ -20,7 +20,7 @@ command-tools 下载并加入到环境变量中后，并不能直接使用，还
 1 $ git push -d origin &amp;lt;branch_name&amp;gt; 删除远程仓库的tag同理 1 git push --d origin tagname 如果还需要删除本地的tag，那么
 1 git tag -d tagname</description></item><item><title>Docker常用操作</title><link>https://blog.mylab.top/post/docker%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/</link><pubDate>Sun, 09 May 2021 10:04:13 +0800</pubDate><guid>https://blog.mylab.top/post/docker%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/</guid><description>docker 安装 1 2 3 curl -sSL get.docker.com | sudo bash -s -- --mirror Aliyun # 或者使用 wget wget -qO- get.docker.com | sudo bash -s -- --mirror Aliyun docker-compose安装 通过apt安装的docker-compose版本太老，所以还是使用官网的方式安装。
 下载
-1 sudo curl -L &amp;#34;https://github.com/docker/compose/releases/download/1.29.1/docker-compose-$(uname -s)-$(uname -m)&amp;#34; -o /usr/local/bin/docker-compose 添加可执行权限
+1 sudo curl -L &amp;#34;https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)&amp;#34; -o /usr/local/bin/docker-compose 添加可执行权限
 1 sudo chmod +x /usr/local/bin/docker-compose 添加bash-completion（可选）
 1 2 3 sudo curl \ -L https://raw.</description></item><item><title>Vim常用操作</title><link>https://blog.mylab.top/post/vim%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/</link><pubDate>Sat, 24 Apr 2021 15:44:48 +0800</pubDate><guid>https://blog.mylab.top/post/vim%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C/</guid><description>编辑二进制文件 https://vi.stackexchange.com/questions/343/how-to-edit-binary-files-with-vim
 打开并编辑二进制文件, 可以使用 xxd 命令
