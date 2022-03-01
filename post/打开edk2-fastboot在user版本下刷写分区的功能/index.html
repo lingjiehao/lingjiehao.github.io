@@ -1,0 +1,94 @@
+<!doctype html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><link href="https://fonts.loli.net/css?family=Ubuntu" rel=stylesheet><title>打开edk2 fastboot在user版本下刷写分区的功能</title><link rel=stylesheet href=/css/stylesheet.css></head><body><section id=page-title><h1><a href=/>Aliens</a></h1></section><section class=blog-post><h1>打开edk2 fastboot在user版本下刷写分区的功能</h1><div class=blog-post-subheader>March 1, 2022</div><div class=blog-post-content><p><em>在Android 10中测试有效</em></p><p>在user版本中, 使用fastboot flash boot boot.img会提示&rsquo;Unknown command', 这是因为在user版本中, 关闭了fastboot flash的命令.</p><p>edk2版本的fastboot对应的源码路径为<code>QcomModulePkg/Library/FastbootLib</code>, <code>flash</code> 等命令在<code>FastbootCmds.c</code>中的<code>cmd_list</code>这个数组定义.</p><div class=highlight><div style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">28
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-c data-lang=c><span style=color:#00a8c8>struct</span> <span style=color:#111>FastbootCmdDesc</span> <span style=color:#111>cmd_list</span><span style=color:#111>[]</span> <span style=color:#f92672>=</span> <span style=color:#111>{</span>
+      <span style=color:#75715e>/* By Default enable list is empty */</span>
+      <span style=color:#111>{</span><span style=color:#d88200>&#34;&#34;</span><span style=color:#111>,</span> <span style=color:#111>NULL</span><span style=color:#111>},</span>
+<span style=color:#75715e>/*CAUTION(High): Enabling these commands will allow changing the partitions
+</span><span style=color:#75715e> *like system,userdata,cachec etc...
+</span><span style=color:#75715e> */</span>
+<span style=color:#75715e>#ifdef ENABLE_UPDATE_PARTITIONS_CMDS
+</span><span style=color:#75715e></span>      <span style=color:#111>{</span><span style=color:#d88200>&#34;flash:&#34;</span><span style=color:#111>,</span> <span style=color:#111>CmdFlash</span><span style=color:#111>},</span>
+      <span style=color:#111>{</span><span style=color:#d88200>&#34;erase:&#34;</span><span style=color:#111>,</span> <span style=color:#111>CmdErase</span><span style=color:#111>},</span>
+      <span style=color:#111>{</span><span style=color:#d88200>&#34;set_active&#34;</span><span style=color:#111>,</span> <span style=color:#111>CmdSetActive</span><span style=color:#111>},</span>
+      <span style=color:#111>{</span><span style=color:#d88200>&#34;flashing get_unlock_ability&#34;</span><span style=color:#111>,</span> <span style=color:#111>CmdFlashingGetUnlockAbility</span><span style=color:#111>},</span>
+      <span style=color:#111>{</span><span style=color:#d88200>&#34;flashing unlock&#34;</span><span style=color:#111>,</span> <span style=color:#111>CmdFlashingUnlock</span><span style=color:#111>},</span>
+      <span style=color:#111>{</span><span style=color:#d88200>&#34;flashing lock&#34;</span><span style=color:#111>,</span> <span style=color:#111>CmdFlashingLock</span><span style=color:#111>},</span>
+<span style=color:#75715e>#endif
+</span><span style=color:#75715e></span><span style=color:#75715e>/*
+</span><span style=color:#75715e> *CAUTION(CRITICAL): Enabling these commands will allow changes to bootimage.
+</span><span style=color:#75715e> */</span>
+<span style=color:#75715e>#ifdef ENABLE_DEVICE_CRITICAL_LOCK_UNLOCK_CMDS
+</span><span style=color:#75715e></span>      <span style=color:#111>{</span><span style=color:#d88200>&#34;flashing unlock_critical&#34;</span><span style=color:#111>,</span> <span style=color:#111>CmdFlashingUnLockCritical</span><span style=color:#111>},</span>
+      <span style=color:#111>{</span><span style=color:#d88200>&#34;flashing lock_critical&#34;</span><span style=color:#111>,</span> <span style=color:#111>CmdFlashingLockCritical</span><span style=color:#111>},</span>
+<span style=color:#75715e>#endif
+</span><span style=color:#75715e></span><span style=color:#75715e>/*
+</span><span style=color:#75715e> *CAUTION(CRITICAL): Enabling this command will allow boot with different
+</span><span style=color:#75715e> *bootimage.
+</span><span style=color:#75715e> */</span>
+<span style=color:#75715e>#ifdef ENABLE_BOOT_CMD
+</span><span style=color:#75715e></span>      <span style=color:#111>{</span><span style=color:#d88200>&#34;boot&#34;</span><span style=color:#111>,</span> <span style=color:#111>CmdBoot</span><span style=color:#111>},</span>
+<span style=color:#75715e>#endif
+</span></code></pre></td></tr></table></div></div><p>可以看出, 这些命令被<code>ENABLE_UPDATE_PARTITIONS_CMDS</code>, <code>ENABLE_DEVICE_CRITICAL_LOCK_UNLOCK_CMDS</code>, <code>ENABLE_BOOT_CMD</code>控制, 如果需要强行使用这些命令, 那么有两种方法:</p><p>a. 在<code>FastbootCmds.c</code>开头define这些宏
+b. 在编译脚本中使用<code>-D</code>参数打开这些宏</p><p>我选择的是方案b, 搜索整个工程, 发现在<code>QcomModulePkg.dsc</code>中定义了这些宏</p><div class=highlight><div style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>!if $(USER_BUILD_VARIANT) == 0
+    GCC:*_*_*_CC_FLAGS = -DENABLE_UPDATE_PARTITIONS_CMDS -DENABLE_BOOT_CMD -DENABLE_DEVICE_CRITICAL_LOCK_UNLOCK_CMDS
+!else
+    GCC:*_*_*_CC_FLAGS = 
+!endif
+</code></pre></td></tr></table></div></div><p>很显然, userdebug时才会定义这些宏, user版本不会, 故作如下修改</p><div class=highlight><div style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-diff data-lang=diff>diff --git a/QcomModulePkg/QcomModulePkg.dsc b/QcomModulePkg/QcomModulePkg.dsc
+index 99f990c52..0b37499f5 100644
+--- a/QcomModulePkg/QcomModulePkg.dsc
++++ b/QcomModulePkg/QcomModulePkg.dsc
+@@ -114,7 +114,7 @@
+   !if $(USER_BUILD_VARIANT) == 0
+       GCC:*_*_*_CC_FLAGS = -DENABLE_UPDATE_PARTITIONS_CMDS -DENABLE_BOOT_CMD -DENABLE_DEVICE_CRITICAL_LOCK_UNLOCK_CMDS
+   !else
+-      GCC:*_*_*_CC_FLAGS = -DUSER_BUILD_VARIANT
++      GCC:*_*_*_CC_FLAGS = -DENABLE_UPDATE_PARTITIONS_CMDS -DENABLE_BOOT_CMD -DENABLE_DEVICE_CRITICAL_LOCK_UNLOCK_CMDS
+   !endif
+   !if $(ENABLE_LE_VARIANT) == 1
+       GCC:*_*_*_CC_FLAGS = -DENABLE_LE_VARIANT
+</code></pre></td></tr></table></div></div><p>参考: <a href=https://blog.csdn.net/super_AI_x/article/details/97791564>https://blog.csdn.net/super_AI_x/article/details/97791564</a></p></div></section></body></html>
