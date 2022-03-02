@@ -1,0 +1,35 @@
+<!doctype html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><link href="https://fonts.loli.net/css?family=Ubuntu" rel=stylesheet><title>Wireguard Bypass Certain Ip</title><link rel=stylesheet href=/css/stylesheet.css></head><body><section id=page-title><h1><a href=/>Aliens</a></h1></section><section class=blog-post><h1>Wireguard Bypass Certain Ip</h1><div class=blog-post-subheader>March 2, 2022</div><div class=blog-post-content><p><a href=https://www.reddit.com/r/WireGuard/comments/emjgp0/bypass_certain_ip_from_going_into_wireguard_tunnel/>https://www.reddit.com/r/WireGuard/comments/emjgp0/bypass_certain_ip_from_going_into_wireguard_tunnel/</a></p><p>You could replace 0.0.0.0/0 and/or ::/0 in the AllowedIPs setting with a list of ranges that cover everything but the IP ranges you want to bypass.</p><div class=highlight><div style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=color:#f92672>from</span> <span style=color:#111>ipaddress</span> <span style=color:#f92672>import</span> <span style=color:#111>ip_network</span>
+
+<span style=color:#111>start</span> <span style=color:#f92672>=</span> <span style=color:#d88200>&#39;0.0.0.0/0&#39;</span>
+<span style=color:#111>exclude</span> <span style=color:#f92672>=</span> <span style=color:#111>[</span><span style=color:#d88200>&#39;8.8.8.8&#39;</span><span style=color:#111>,</span> <span style=color:#d88200>&#39;10.8.0.0/24&#39;</span><span style=color:#111>]</span>
+
+<span style=color:#111>result</span> <span style=color:#f92672>=</span> <span style=color:#111>[</span><span style=color:#111>ip_network</span><span style=color:#111>(</span><span style=color:#111>start</span><span style=color:#111>)]</span>
+<span style=color:#00a8c8>for</span> <span style=color:#111>x</span> <span style=color:#f92672>in</span> <span style=color:#111>exclude</span><span style=color:#111>:</span>
+    <span style=color:#111>n</span> <span style=color:#f92672>=</span> <span style=color:#111>ip_network</span><span style=color:#111>(</span><span style=color:#111>x</span><span style=color:#111>)</span>
+    <span style=color:#111>new</span> <span style=color:#f92672>=</span> <span style=color:#111>[]</span>
+    <span style=color:#00a8c8>for</span> <span style=color:#111>y</span> <span style=color:#f92672>in</span> <span style=color:#111>result</span><span style=color:#111>:</span>
+        <span style=color:#00a8c8>if</span> <span style=color:#111>y</span><span style=color:#f92672>.</span><span style=color:#111>overlaps</span><span style=color:#111>(</span><span style=color:#111>n</span><span style=color:#111>):</span>
+            <span style=color:#111>new</span><span style=color:#f92672>.</span><span style=color:#111>extend</span><span style=color:#111>(</span><span style=color:#111>y</span><span style=color:#f92672>.</span><span style=color:#111>address_exclude</span><span style=color:#111>(</span><span style=color:#111>n</span><span style=color:#111>))</span>
+        <span style=color:#00a8c8>else</span><span style=color:#111>:</span>
+            <span style=color:#111>new</span><span style=color:#f92672>.</span><span style=color:#111>append</span><span style=color:#111>(</span><span style=color:#111>y</span><span style=color:#111>)</span>
+    <span style=color:#111>result</span> <span style=color:#f92672>=</span> <span style=color:#111>new</span>
+
+<span style=color:#00a8c8>print</span><span style=color:#111>(</span><span style=color:#d88200>&#39;,&#39;</span><span style=color:#f92672>.</span><span style=color:#111>join</span><span style=color:#111>(</span><span style=color:#111>str</span><span style=color:#111>(</span><span style=color:#111>x</span><span style=color:#111>)</span> <span style=color:#00a8c8>for</span> <span style=color:#111>x</span> <span style=color:#f92672>in</span> <span style=color:#111>sorted</span><span style=color:#111>(</span><span style=color:#111>result</span><span style=color:#111>)))</span>
+</code></pre></td></tr></table></div></div></div></section></body></html>
