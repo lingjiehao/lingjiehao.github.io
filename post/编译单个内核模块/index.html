@@ -1,0 +1,61 @@
+<!doctype html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><link href="https://fonts.loli.net/css?family=Ubuntu" rel=stylesheet><title>编译单个内核模块</title><link rel=stylesheet href=/css/stylesheet.css></head><body><section id=page-title><h1><a href=/>Aliens</a></h1></section><section class=blog-post><h1>编译单个内核模块</h1><div class=blog-post-subheader>March 2, 2022</div><div class=blog-post-content><p>环境: Ubuntu 16.04 + Android P源码</p><p>源码路径: /home/michael/android_code</p><p>需要编译的模块路径: 比如 <code>/home/michael/test_module/</code>, 内核模块文件名为<code>test_module.c</code>
+那么只需要在<code>/home/michael/test_module/</code>中建立一个<code>Makefile</code>文件就可以编译这个模块了.
+<code>Makefile</code>的模板如下:</p><div class=highlight><div style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">18
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-Makefile data-lang=Makefile><span style=color:#111>obj-m</span> <span style=color:#f92672>+=</span> test_module.o
+
+<span style=color:#75715e># Android 源码路径
+</span><span style=color:#75715e></span><span style=color:#111>SOURCE_PATH</span> <span style=color:#f92672>:=</span> /home/michael/android_src
+
+<span style=color:#75715e># kernel 的输出目录, &lt;product-name&gt; 因产品而异,下文同
+</span><span style=color:#75715e></span><span style=color:#111>KDIR</span> <span style=color:#f92672>:=</span> <span style=color:#00a8c8>$(</span>SOURCE_PATH<span style=color:#00a8c8>)</span>/out/target/product/&lt;product-name&gt;/obj/KERNEL_OBJ
+<span style=color:#111>PWD</span> <span style=color:#f92672>:=</span><span style=color:#00a8c8>$(</span>shell <span style=color:#111>pwd</span><span style=color:#00a8c8>)</span>
+
+<span style=color:#111>KERNEL_CFLAGS</span> <span style=color:#f92672>:=</span> <span style=color:#111>KCFLAGS</span><span style=color:#f92672>=</span>-mno-android
+<span style=color:#111>CROSS</span> <span style=color:#f92672>:=</span> <span style=color:#00a8c8>$(</span>SOURCE_PATH<span style=color:#00a8c8>)</span>/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin
+
+<span style=color:#75af00>all</span><span style=color:#f92672>:</span>
+	<span style=color:#00a8c8>$(</span>MAKE<span style=color:#00a8c8>)</span> -C <span style=color:#00a8c8>$(</span>FLAGS<span style=color:#00a8c8>)</span> <span style=color:#00a8c8>$(</span>KDIR<span style=color:#00a8c8>)</span> <span style=color:#111>ARCH</span><span style=color:#f92672>=</span>arm64 <span style=color:#111>CROSS_COMPILE</span><span style=color:#f92672>=</span><span style=color:#00a8c8>$(</span>CROSS<span style=color:#00a8c8>)</span>/aarch64-linux-android- <span style=color:#111>M</span><span style=color:#f92672>=</span><span style=color:#00a8c8>$(</span>PWD<span style=color:#00a8c8>)</span> <span style=color:#00a8c8>$(</span>FLAGS<span style=color:#00a8c8>)</span> <span style=color:#00a8c8>$(</span>KERNEL_CFLAGS<span style=color:#00a8c8>)</span> modules
+
+<span style=color:#75af00>clean</span><span style=color:#f92672>:</span>
+	rm -f *.mod.c *.ko *.o .*.cmd *.symvers *.order
+	rm -rf .tmp_versions
+</code></pre></td></tr></table></div></div><h2 id=更简单的版本>更简单的版本</h2><div class=highlight><div style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">11
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-Makefile data-lang=Makefile><span style=color:#960050;background-color:#1e0010>ifneq</span> <span style=color:#960050;background-color:#1e0010>(</span><span style=color:#00a8c8>$(</span><span style=color:#111>KERNELRELEASE</span><span style=color:#00a8c8>)</span><span style=color:#960050;background-color:#1e0010>,)</span>
+	<span style=color:#111>obj-m</span> <span style=color:#f92672>:=</span> debugfs-test.o
+<span style=color:#75715e># Otherwise we were called directly from the command line; invoke the kernel build system.
+</span><span style=color:#75715e></span><span style=color:#960050;background-color:#1e0010>else</span>
+	<span style=color:#111>KERNELDIR</span> <span style=color:#f92672>?=</span> /lib/modules/<span style=color:#00a8c8>$(</span>shell uname -r<span style=color:#00a8c8>)</span>/build
+	PWD :<span style=color:#f92672>=</span> <span style=color:#00a8c8>$(</span>shell <span style=color:#111>pwd</span><span style=color:#00a8c8>)</span>
+<span style=color:#75af00>all</span><span style=color:#f92672>:</span>
+	<span style=color:#00a8c8>$(</span>MAKE<span style=color:#00a8c8>)</span> -C <span style=color:#00a8c8>$(</span>KERNELDIR<span style=color:#00a8c8>)</span> <span style=color:#111>M</span><span style=color:#f92672>=</span><span style=color:#00a8c8>$(</span>PWD<span style=color:#00a8c8>)</span> modules
+<span style=color:#75af00>clean</span><span style=color:#f92672>:</span>
+	<span style=color:#00a8c8>$(</span>MAKE<span style=color:#00a8c8>)</span> -C <span style=color:#00a8c8>$(</span>KERNELDIR<span style=color:#00a8c8>)</span> <span style=color:#111>M</span><span style=color:#f92672>=</span><span style=color:#00a8c8>$(</span>PWD<span style=color:#00a8c8>)</span> clean
+<span style=color:#960050;background-color:#1e0010>endif</span>
+</code></pre></td></tr></table></div></div></div></section></body></html>
