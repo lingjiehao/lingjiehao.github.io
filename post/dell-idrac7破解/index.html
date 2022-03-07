@@ -1,0 +1,234 @@
+<!doctype html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><link href="https://fonts.loli.net/css?family=Ubuntu" rel=stylesheet><title>Dell IDRAC7破解</title><link rel=stylesheet href=/css/stylesheet.css></head><body><section id=page-title><h1><a href=/>Aliens</a></h1></section><section class=blog-post><h1>Dell IDRAC7破解</h1><div class=blog-post-subheader>March 7, 2022</div><div class=blog-post-content><p>Once the system is booted log into the iDRAC</p><p>Your new service tag should be updated to 9QYZF42
+Open your favorite file editor and create a new XML file with the contents at the bottom of the page, starting at &lt;?xml&mldr;
+Load this file as a license in your iDRAC, log out, and back in.</p><p>You now have iDRAC7 enterprise!</p><p>Since iDRAC authenticates using your service tag, if you go back, the license will revert to idrac basic.
+This obviously isn&rsquo;t a solution for business because duplicate service tags will cause big problems on your network during deployment, and if somebody decides to call in for service.</p><p>This isn&rsquo;t a terrible idea for the average homelabber though.</p><p>Tested on 12th generation poweredge servers, Dell PowerEdge R#20/T#20</p><div class=highlight><div style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  6
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  7
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  8
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">  9
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 10
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 11
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 12
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 13
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 14
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 15
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 16
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 17
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 18
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 19
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 20
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 21
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 22
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 23
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 24
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 25
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 26
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 27
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 28
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 29
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 30
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 31
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 32
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 33
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 34
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 35
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 36
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 37
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 38
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 39
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 40
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 41
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 42
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 43
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 44
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 45
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 46
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 47
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 48
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 49
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 50
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 51
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 52
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 53
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 54
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 55
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 56
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 57
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 58
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 59
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 60
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 61
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 62
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 63
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 64
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 65
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 66
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 67
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 68
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 69
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 70
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 71
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 72
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 73
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 74
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 75
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 76
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 77
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 78
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 79
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 80
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 81
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 82
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 83
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 84
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 85
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 86
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 87
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 88
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 89
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 90
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 91
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 92
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 93
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 94
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 95
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 96
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 97
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 98
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f"> 99
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">100
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">101
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">102
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">103
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">104
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">105
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">106
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">107
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">108
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">109
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">110
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">111
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">112
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">113
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-xml data-lang=xml><span style=color:#75715e>&lt;?xml version=&#34;1.0&#34;?&gt;</span>
+<span style=color:#75715e>&lt;!--Copyright (c) 2010-2011 Dell Inc. All Rights Reserved.--&gt;</span>
+<span style=color:#f92672>&lt;lns:LicenseClass</span> <span style=color:#75af00>xmlns:ds=</span><span style=color:#d88200>&#34;http://www.w3.org/2000/09/xmldsig#&#34;</span> <span style=color:#75af00>xmlns:xsi=</span><span style=color:#d88200>&#34;http://www.w3.org/2001/XMLSchema-instance&#34;</span> <span style=color:#75af00>xmlns:lns=</span><span style=color:#d88200>&#34;http://www.dell.com/2011/12G/licensing&#34;</span><span style=color:#f92672>&gt;</span>
+  <span style=color:#f92672>&lt;lns:LicenseData&gt;</span>
+    <span style=color:#f92672>&lt;lns:Schema</span> <span style=color:#75af00>lns:Vendor=</span><span style=color:#d88200>&#34;Dell&#34;</span> <span style=color:#75af00>lns:ID=</span><span style=color:#d88200>&#34;iDRAC&#34;</span> <span style=color:#75af00>lns:maxDepth=</span><span style=color:#d88200>&#34;255&#34;</span> <span style=color:#75af00>lns:SchemaVersion=</span><span style=color:#d88200>&#34;2.0&#34;</span><span style=color:#f92672>/&gt;</span>
+    <span style=color:#f92672>&lt;lns:TransferableLicense&gt;</span>true<span style=color:#f92672>&lt;/lns:TransferableLicense&gt;</span>
+    <span style=color:#f92672>&lt;lns:UTCdateSold&gt;</span>2013-07-30T03:04:11Z<span style=color:#f92672>&lt;/lns:UTCdateSold&gt;</span>
+    <span style=color:#f92672>&lt;lns:EntitlementID&gt;</span>DE00000009660549<span style=color:#f92672>&lt;/lns:EntitlementID&gt;</span>
+    <span style=color:#f92672>&lt;lns:DeviceClass</span> <span style=color:#75af00>lns:ID=</span><span style=color:#d88200>&#34;iDRAC&#34;</span><span style=color:#f92672>/&gt;</span>
+    <span style=color:#f92672>&lt;lns:ProductDescription&gt;</span>
+      <span style=color:#f92672>&lt;lns:lang_en&gt;</span>iDRAC7 Enterprise License<span style=color:#f92672>&lt;/lns:lang_en&gt;</span>
+      <span style=color:#f92672>&lt;lns:lang_es&gt;</span>iDRAC7 Enterprise License<span style=color:#f92672>&lt;/lns:lang_es&gt;</span>
+      <span style=color:#f92672>&lt;lns:lang_fr&gt;</span>iDRAC7 Enterprise License<span style=color:#f92672>&lt;/lns:lang_fr&gt;</span>
+      <span style=color:#f92672>&lt;lns:lang_de&gt;</span>iDRAC7 Enterprise License<span style=color:#f92672>&lt;/lns:lang_de&gt;</span>
+      <span style=color:#f92672>&lt;lns:lang_it&gt;</span>iDRAC7 Enterprise License<span style=color:#f92672>&lt;/lns:lang_it&gt;</span>
+      <span style=color:#f92672>&lt;lns:lang_ja&gt;</span>iDRAC7 Enterprise License<span style=color:#f92672>&lt;/lns:lang_ja&gt;</span>
+      <span style=color:#f92672>&lt;lns:lang_zh&gt;</span>iDRAC7 Enterprise License<span style=color:#f92672>&lt;/lns:lang_zh&gt;</span>
+    <span style=color:#f92672>&lt;/lns:ProductDescription&gt;</span>
+    <span style=color:#f92672>&lt;lns:LicenseTerm&gt;</span>
+      <span style=color:#f92672>&lt;lns:Perpetual/&gt;</span>
+    <span style=color:#f92672>&lt;/lns:LicenseTerm&gt;</span>
+    <span style=color:#f92672>&lt;lns:Restrictions&gt;</span>
+      <span style=color:#f92672>&lt;lns:ServiceTag&gt;</span>9QYZF42<span style=color:#f92672>&lt;/lns:ServiceTag&gt;</span>
+    <span style=color:#f92672>&lt;/lns:Restrictions&gt;</span>
+    <span style=color:#f92672>&lt;lns:DeviceInfo</span> <span style=color:#75af00>lns:ID=</span><span style=color:#d88200>&#34;1&#34;</span> <span style=color:#75af00>lns:VendorID=</span><span style=color:#d88200>&#34;0x1912&#34;</span> <span style=color:#75af00>lns:DeviceID=</span><span style=color:#d88200>&#34;0x0011&#34;</span><span style=color:#f92672>/&gt;</span>
+    <span style=color:#f92672>&lt;lns:Feature</span> <span style=color:#75af00>lns:ID=</span><span style=color:#d88200>&#34;1&#34;</span> <span style=color:#75af00>lns:Description=</span><span style=color:#d88200>&#34;License Management&#34;</span> <span style=color:#75af00>lns:Enabled=</span><span style=color:#d88200>&#34;true&#34;</span><span style=color:#f92672>/&gt;</span>
+    <span style=color:#f92672>&lt;lns:Feature</span> <span style=color:#75af00>lns:ID=</span><span style=color:#d88200>&#34;2&#34;</span> <span style=color:#75af00>lns:Description=</span><span style=color:#d88200>&#34;RACADM&#34;</span> <span style=color:#75af00>lns:Enabled=</span><span style=color:#d88200>&#34;true&#34;</span><span style=color:#f92672>/&gt;</span>
+    <span style=color:#f92672>&lt;lns:Feature</span> <span style=color:#75af00>lns:ID=</span><span style=color:#d88200>&#34;3&#34;</span> <span style=color:#75af00>lns:Description=</span><span style=color:#d88200>&#34;WSMAN&#34;</span> <span style=color:#75af00>lns:Enabled=</span><span style=color:#d88200>&#34;true&#34;</span><span style=color:#f92672>/&gt;</span>
+    <span style=color:#f92672>&lt;lns:Feature</span> <span style=color:#75af00>lns:ID=</span><span style=color:#d88200>&#34;4&#34;</span> <span style=color:#75af00>lns:Description=</span><span style=color:#d88200>&#34;SNMP&#34;</span> <span style=color:#75af00>lns:Enabled=</span><span style=color:#d88200>&#34;true&#34;</span><span style=color:#f92672>/&gt;</span>
+    <span style=color:#f92672>&lt;lns:Feature</span> <span style=color:#75af00>lns:ID=</span><span style=color:#d88200>&#34;5&#34;</span> <span style=color:#75af00>lns:Description=</span><span style=color:#d88200>&#34;Auto Discovery&#34;</span> <span style=color:#75af00>lns:Enabled=</span><span style=color:#d88200>&#34;true&#34;</span><span style=color:#f92672>/&gt;</span>
+    <span style=color:#f92672>&lt;lns:Feature</span> <span style=color:#75af00>lns:ID=</span><span style=color:#d88200>&#34;6&#34;</span> <span style=color:#75af00>lns:Description=</span><span style=color:#d88200>&#34;USC Firmware Update&#34;</span> <span style=color:#75af00>lns:Enabled=</span><span style=color:#d88200>&#34;true&#34;</span><span style=color:#f92672>/&gt;</span>
+    <span style=color:#f92672>&lt;lns:Feature</span> <span style=color:#75af00>lns:ID=</span><span style=color:#d88200>&#34;7&#34;</span> <span style=color:#75af00>lns:Description=</span><span style=color:#d88200>&#34;Update Package&#34;</span> <span style=color:#75af00>lns:Enabled=</span><span style=color:#d88200>&#34;true&#34;</span><span style=color:#f92672>/&gt;</span>
+    <span style=color:#f92672>&lt;lns:Feature</span> <span style=color:#75af00>lns:ID=</span><span style=color:#d88200>&#34;8&#34;</span> <span style=color:#75af00>lns:Description=</span><span style=color:#d88200>&#34;USC Operating System Deployment&#34;</span> <span style=color:#75af00>lns:Enabled=</span><span style=color:#d88200>&#34;true&#34;</span><span style=color:#f92672>/&gt;</span>
+    <span style=color:#f92672>&lt;lns:Feature</span> <span style=color:#75af00>lns:ID=</span><span style=color:#d88200>&#34;9&#34;</span> <span style=color:#75af00>lns:Description=</span><span style=color:#d88200>&#34;USC Device Configuration&#34;</span> <span style=color:#75af00>lns:Enabled=</span><span style=color:#d88200>&#34;true&#34;</span><span style=color:#f92672>/&gt;</span>
+    <span style=color:#f92672>&lt;lns:Feature</span> <span style=color:#75af00>lns:ID=</span><span style=color:#d88200>&#34;10&#34;</span> <span style=color:#75af00>lns:Description=</span><span style=color:#d88200>&#34;USC Diagnostics&#34;</span> <span style=color:#75af00>lns:Enabled=</span><span style=color:#d88200>&#34;true&#34;</span><span style=color:#f92672>/&gt;</span>
+    <span style=color:#f92672>&lt;lns:Feature</span> <span style=color:#75af00>lns:ID=</span><span style=color:#d88200>&#34;11&#34;</span> <span style=color:#75af00>lns:Description=</span><span style=color:#d88200>&#34;Power Budget&#34;</span> <span style=color:#75af00>lns:Enabled=</span><span style=color:#d88200>&#34;true&#34;</span><span style=color:#f92672>/&gt;</span>
+    <span style=color:#f92672>&lt;lns:Feature</span> <span style=color:#75af00>lns:ID=</span><span style=color:#d88200>&#34;12&#34;</span> <span style=color:#75af00>lns:Description=</span><span style=color:#d88200>&#34;Power Monitoring&#34;</span> <span style=color:#75af00>lns:Enabled=</span><span style=color:#d88200>&#34;true&#34;</span><span style=color:#f92672>/&gt;</span>
+    <span style=color:#f92672>&lt;lns:Feature</span> <span style=color:#75af00>lns:ID=</span><span style=color:#d88200>&#34;13&#34;</span> <span style=color:#75af00>lns:Description=</span><span style=color:#d88200>&#34;Virtual Media&#34;</span> <span style=color:#75af00>lns:Enabled=</span><span style=color:#d88200>&#34;true&#34;</span><span style=color:#f92672>/&gt;</span>
+    <span style=color:#f92672>&lt;lns:Feature</span> <span style=color:#75af00>lns:ID=</span><span style=color:#d88200>&#34;14&#34;</span> <span style=color:#75af00>lns:Description=</span><span style=color:#d88200>&#34;Telnet&#34;</span> <span style=color:#75af00>lns:Enabled=</span><span style=color:#d88200>&#34;true&#34;</span><span style=color:#f92672>/&gt;</span>
+    <span style=color:#f92672>&lt;lns:Feature</span> <span style=color:#75af00>lns:ID=</span><span style=color:#d88200>&#34;15&#34;</span> <span style=color:#75af00>lns:Description=</span><span style=color:#d88200>&#34;SMASH CLP&#34;</span> <span style=color:#75af00>lns:Enabled=</span><span style=color:#d88200>&#34;true&#34;</span><span style=color:#f92672>/&gt;</span>
+    <span style=color:#f92672>&lt;lns:Feature</span> <span style=color:#75af00>lns:ID=</span><span style=color:#d88200>&#34;16&#34;</span> <span style=color:#75af00>lns:Description=</span><span style=color:#d88200>&#34;IPv6&#34;</span> <span style=color:#75af00>lns:Enabled=</span><span style=color:#d88200>&#34;true&#34;</span><span style=color:#f92672>/&gt;</span>
+    <span style=color:#f92672>&lt;lns:Feature</span> <span style=color:#75af00>lns:ID=</span><span style=color:#d88200>&#34;17&#34;</span> <span style=color:#75af00>lns:Description=</span><span style=color:#d88200>&#34;Dynamic DNS&#34;</span> <span style=color:#75af00>lns:Enabled=</span><span style=color:#d88200>&#34;true&#34;</span><span style=color:#f92672>/&gt;</span>
+    <span style=color:#f92672>&lt;lns:Feature</span> <span style=color:#75af00>lns:ID=</span><span style=color:#d88200>&#34;18&#34;</span> <span style=color:#75af00>lns:Description=</span><span style=color:#d88200>&#34;Dedicated NIC&#34;</span> <span style=color:#75af00>lns:Enabled=</span><span style=color:#d88200>&#34;true&#34;</span><span style=color:#f92672>/&gt;</span>
+    <span style=color:#f92672>&lt;lns:Feature</span> <span style=color:#75af00>lns:ID=</span><span style=color:#d88200>&#34;19&#34;</span> <span style=color:#75af00>lns:Description=</span><span style=color:#d88200>&#34;Directory Services&#34;</span> <span style=color:#75af00>lns:Enabled=</span><span style=color:#d88200>&#34;true&#34;</span><span style=color:#f92672>/&gt;</span>
+    <span style=color:#f92672>&lt;lns:Feature</span> <span style=color:#75af00>lns:ID=</span><span style=color:#d88200>&#34;20&#34;</span> <span style=color:#75af00>lns:Description=</span><span style=color:#d88200>&#34;Two-Factor Authentication&#34;</span> <span style=color:#75af00>lns:Enabled=</span><span style=color:#d88200>&#34;true&#34;</span><span style=color:#f92672>/&gt;</span>
+    <span style=color:#f92672>&lt;lns:Feature</span> <span style=color:#75af00>lns:ID=</span><span style=color:#d88200>&#34;21&#34;</span> <span style=color:#75af00>lns:Description=</span><span style=color:#d88200>&#34;Single Sign-On&#34;</span> <span style=color:#75af00>lns:Enabled=</span><span style=color:#d88200>&#34;true&#34;</span><span style=color:#f92672>/&gt;</span>
+    <span style=color:#f92672>&lt;lns:Feature</span> <span style=color:#75af00>lns:ID=</span><span style=color:#d88200>&#34;22&#34;</span> <span style=color:#75af00>lns:Description=</span><span style=color:#d88200>&#34;PK Authentication&#34;</span> <span style=color:#75af00>lns:Enabled=</span><span style=color:#d88200>&#34;true&#34;</span><span style=color:#f92672>/&gt;</span>
+    <span style=color:#f92672>&lt;lns:Feature</span> <span style=color:#75af00>lns:ID=</span><span style=color:#d88200>&#34;23&#34;</span> <span style=color:#75af00>lns:Description=</span><span style=color:#d88200>&#34;Crash Screen Capture&#34;</span> <span style=color:#75af00>lns:Enabled=</span><span style=color:#d88200>&#34;true&#34;</span><span style=color:#f92672>/&gt;</span>
+    <span style=color:#f92672>&lt;lns:Feature</span> <span style=color:#75af00>lns:ID=</span><span style=color:#d88200>&#34;24&#34;</span> <span style=color:#75af00>lns:Description=</span><span style=color:#d88200>&#34;Crash Video Capture&#34;</span> <span style=color:#75af00>lns:Enabled=</span><span style=color:#d88200>&#34;true&#34;</span><span style=color:#f92672>/&gt;</span>
+    <span style=color:#f92672>&lt;lns:Feature</span> <span style=color:#75af00>lns:ID=</span><span style=color:#d88200>&#34;25&#34;</span> <span style=color:#75af00>lns:Description=</span><span style=color:#d88200>&#34;Boot Capture&#34;</span> <span style=color:#75af00>lns:Enabled=</span><span style=color:#d88200>&#34;true&#34;</span><span style=color:#f92672>/&gt;</span>
+    <span style=color:#f92672>&lt;lns:Feature</span> <span style=color:#75af00>lns:ID=</span><span style=color:#d88200>&#34;26&#34;</span> <span style=color:#75af00>lns:Description=</span><span style=color:#d88200>&#34;Virtual Console&#34;</span> <span style=color:#75af00>lns:Enabled=</span><span style=color:#d88200>&#34;true&#34;</span><span style=color:#f92672>/&gt;</span>
+    <span style=color:#f92672>&lt;lns:Feature</span> <span style=color:#75af00>lns:ID=</span><span style=color:#d88200>&#34;27&#34;</span> <span style=color:#75af00>lns:Description=</span><span style=color:#d88200>&#34;Virtual Flash Partitions&#34;</span> <span style=color:#75af00>lns:Enabled=</span><span style=color:#d88200>&#34;true&#34;</span><span style=color:#f92672>/&gt;</span>
+    <span style=color:#f92672>&lt;lns:Feature</span> <span style=color:#75af00>lns:ID=</span><span style=color:#d88200>&#34;28&#34;</span> <span style=color:#75af00>lns:Description=</span><span style=color:#d88200>&#34;Console Collaboration&#34;</span> <span style=color:#75af00>lns:Enabled=</span><span style=color:#d88200>&#34;true&#34;</span><span style=color:#f92672>/&gt;</span>
+    <span style=color:#f92672>&lt;lns:Feature</span> <span style=color:#75af00>lns:ID=</span><span style=color:#d88200>&#34;29&#34;</span> <span style=color:#75af00>lns:Description=</span><span style=color:#d88200>&#34;Device Monitoring&#34;</span> <span style=color:#75af00>lns:Enabled=</span><span style=color:#d88200>&#34;true&#34;</span><span style=color:#f92672>/&gt;</span>
+    <span style=color:#f92672>&lt;lns:Feature</span> <span style=color:#75af00>lns:ID=</span><span style=color:#d88200>&#34;30&#34;</span> <span style=color:#75af00>lns:Description=</span><span style=color:#d88200>&#34;Remote Inventory&#34;</span> <span style=color:#75af00>lns:Enabled=</span><span style=color:#d88200>&#34;true&#34;</span><span style=color:#f92672>/&gt;</span>
+    <span style=color:#f92672>&lt;lns:Feature</span> <span style=color:#75af00>lns:ID=</span><span style=color:#d88200>&#34;31&#34;</span> <span style=color:#75af00>lns:Description=</span><span style=color:#d88200>&#34;Storage Monitoring&#34;</span> <span style=color:#75af00>lns:Enabled=</span><span style=color:#d88200>&#34;true&#34;</span><span style=color:#f92672>/&gt;</span>
+    <span style=color:#f92672>&lt;lns:Feature</span> <span style=color:#75af00>lns:ID=</span><span style=color:#d88200>&#34;32&#34;</span> <span style=color:#75af00>lns:Description=</span><span style=color:#d88200>&#34;Remote Firmware Update&#34;</span> <span style=color:#75af00>lns:Enabled=</span><span style=color:#d88200>&#34;true&#34;</span><span style=color:#f92672>/&gt;</span>
+    <span style=color:#f92672>&lt;lns:Feature</span> <span style=color:#75af00>lns:ID=</span><span style=color:#d88200>&#34;33&#34;</span> <span style=color:#75af00>lns:Description=</span><span style=color:#d88200>&#34;Remote Firmware Configuration&#34;</span> <span style=color:#75af00>lns:Enabled=</span><span style=color:#d88200>&#34;true&#34;</span><span style=color:#f92672>/&gt;</span>
+    <span style=color:#f92672>&lt;lns:Feature</span> <span style=color:#75af00>lns:ID=</span><span style=color:#d88200>&#34;34&#34;</span> <span style=color:#75af00>lns:Description=</span><span style=color:#d88200>&#34;Remote Inventory Export&#34;</span> <span style=color:#75af00>lns:Enabled=</span><span style=color:#d88200>&#34;true&#34;</span><span style=color:#f92672>/&gt;</span>
+    <span style=color:#f92672>&lt;lns:Feature</span> <span style=color:#75af00>lns:ID=</span><span style=color:#d88200>&#34;35&#34;</span> <span style=color:#75af00>lns:Description=</span><span style=color:#d88200>&#34;Remote Operating System Deployment&#34;</span> <span style=color:#75af00>lns:Enabled=</span><span style=color:#d88200>&#34;true&#34;</span><span style=color:#f92672>/&gt;</span>
+    <span style=color:#f92672>&lt;lns:Feature</span> <span style=color:#75af00>lns:ID=</span><span style=color:#d88200>&#34;36&#34;</span> <span style=color:#75af00>lns:Description=</span><span style=color:#d88200>&#34;Backup and Restore&#34;</span> <span style=color:#75af00>lns:Enabled=</span><span style=color:#d88200>&#34;true&#34;</span><span style=color:#f92672>/&gt;</span>
+    <span style=color:#f92672>&lt;lns:Feature</span> <span style=color:#75af00>lns:ID=</span><span style=color:#d88200>&#34;37&#34;</span> <span style=color:#75af00>lns:Description=</span><span style=color:#d88200>&#34;Part Replacement&#34;</span> <span style=color:#75af00>lns:Enabled=</span><span style=color:#d88200>&#34;true&#34;</span><span style=color:#f92672>/&gt;</span>
+    <span style=color:#f92672>&lt;lns:Feature</span> <span style=color:#75af00>lns:ID=</span><span style=color:#d88200>&#34;38&#34;</span> <span style=color:#75af00>lns:Description=</span><span style=color:#d88200>&#34;SSH&#34;</span> <span style=color:#75af00>lns:Enabled=</span><span style=color:#d88200>&#34;true&#34;</span><span style=color:#f92672>/&gt;</span>
+    <span style=color:#f92672>&lt;lns:Feature</span> <span style=color:#75af00>lns:ID=</span><span style=color:#d88200>&#34;39&#34;</span> <span style=color:#75af00>lns:Description=</span><span style=color:#d88200>&#34;Remote File Share&#34;</span> <span style=color:#75af00>lns:Enabled=</span><span style=color:#d88200>&#34;true&#34;</span><span style=color:#f92672>/&gt;</span>
+    <span style=color:#f92672>&lt;lns:Feature</span> <span style=color:#75af00>lns:ID=</span><span style=color:#d88200>&#34;40&#34;</span> <span style=color:#75af00>lns:Description=</span><span style=color:#d88200>&#34;Virtual Folders&#34;</span> <span style=color:#75af00>lns:Enabled=</span><span style=color:#d88200>&#34;true&#34;</span><span style=color:#f92672>/&gt;</span>
+    <span style=color:#f92672>&lt;lns:Feature</span> <span style=color:#75af00>lns:ID=</span><span style=color:#d88200>&#34;41&#34;</span> <span style=color:#75af00>lns:Description=</span><span style=color:#d88200>&#34;Web GUI&#34;</span> <span style=color:#75af00>lns:Enabled=</span><span style=color:#d88200>&#34;true&#34;</span><span style=color:#f92672>/&gt;</span>
+    <span style=color:#f92672>&lt;lns:Feature</span> <span style=color:#75af00>lns:ID=</span><span style=color:#d88200>&#34;42&#34;</span> <span style=color:#75af00>lns:Description=</span><span style=color:#d88200>&#34;Network Time Protocol&#34;</span> <span style=color:#75af00>lns:Enabled=</span><span style=color:#d88200>&#34;true&#34;</span><span style=color:#f92672>/&gt;</span>
+    <span style=color:#f92672>&lt;lns:Feature</span> <span style=color:#75af00>lns:ID=</span><span style=color:#d88200>&#34;43&#34;</span> <span style=color:#75af00>lns:Description=</span><span style=color:#d88200>&#34;Email Alerts&#34;</span> <span style=color:#75af00>lns:Enabled=</span><span style=color:#d88200>&#34;true&#34;</span><span style=color:#f92672>/&gt;</span>
+    <span style=color:#f92672>&lt;lns:Feature</span> <span style=color:#75af00>lns:ID=</span><span style=color:#d88200>&#34;44&#34;</span> <span style=color:#75af00>lns:Description=</span><span style=color:#d88200>&#34;Security Lockout&#34;</span> <span style=color:#75af00>lns:Enabled=</span><span style=color:#d88200>&#34;true&#34;</span><span style=color:#f92672>/&gt;</span>
+    <span style=color:#f92672>&lt;lns:Feature</span> <span style=color:#75af00>lns:ID=</span><span style=color:#d88200>&#34;45&#34;</span> <span style=color:#75af00>lns:Description=</span><span style=color:#d88200>&#34;Remote Syslog&#34;</span> <span style=color:#75af00>lns:Enabled=</span><span style=color:#d88200>&#34;true&#34;</span><span style=color:#f92672>/&gt;</span>
+    <span style=color:#f92672>&lt;lns:Feature</span> <span style=color:#75af00>lns:ID=</span><span style=color:#d88200>&#34;253&#34;</span> <span style=color:#75af00>lns:Description=</span><span style=color:#d88200>&#34;Integrated Dell Remote Access Controller 7 Enterprise&#34;</span> <span style=color:#75af00>lns:Enabled=</span><span style=color:#d88200>&#34;true&#34;</span><span style=color:#f92672>/&gt;</span>
+  <span style=color:#f92672>&lt;/lns:LicenseData&gt;</span>
+<span style=color:#f92672>&lt;dsig:Signature</span> <span style=color:#75af00>xmlns:dsig=</span><span style=color:#d88200>&#34;http://www.w3.org/2000/09/xmldsig#&#34;</span><span style=color:#f92672>&gt;</span>
+<span style=color:#f92672>&lt;dsig:SignedInfo&gt;</span>
+<span style=color:#f92672>&lt;dsig:CanonicalizationMethod</span> <span style=color:#75af00>Algorithm=</span><span style=color:#d88200>&#34;http://www.w3.org/2001/10/xml-exc-c14n#&#34;</span><span style=color:#f92672>/&gt;</span>
+<span style=color:#f92672>&lt;dsig:SignatureMethod</span> <span style=color:#75af00>Algorithm=</span><span style=color:#d88200>&#34;http://www.w3.org/2000/09/xmldsig#rsa-sha1&#34;</span><span style=color:#f92672>/&gt;</span>
+<span style=color:#f92672>&lt;dsig:Reference</span> <span style=color:#75af00>URI=</span><span style=color:#d88200>&#34;&#34;</span><span style=color:#f92672>&gt;</span>
+<span style=color:#f92672>&lt;dsig:Transforms&gt;</span>
+<span style=color:#f92672>&lt;dsig:Transform</span> <span style=color:#75af00>Algorithm=</span><span style=color:#d88200>&#34;http://www.w3.org/2000/09/xmldsig#enveloped-signature&#34;</span><span style=color:#f92672>/&gt;</span>
+<span style=color:#f92672>&lt;/dsig:Transforms&gt;</span>
+<span style=color:#f92672>&lt;dsig:DigestMethod</span> <span style=color:#75af00>Algorithm=</span><span style=color:#d88200>&#34;http://www.w3.org/2000/09/xmldsig#sha1&#34;</span><span style=color:#f92672>/&gt;</span>
+<span style=color:#f92672>&lt;dsig:DigestValue&gt;</span>jEuefYR4MBMs4Ucd9WbRjihpZe4=<span style=color:#f92672>&lt;/dsig:DigestValue&gt;</span>
+<span style=color:#f92672>&lt;/dsig:Reference&gt;</span>
+<span style=color:#f92672>&lt;/dsig:SignedInfo&gt;</span>
+<span style=color:#f92672>&lt;dsig:SignatureValue&gt;</span>P7vr8XFES9T4w+c9Z6uQPq9muMpGv0Dj44El2coPPrkHkkNz5YdZ2qY9vXo+3gcb
+HdLT0e1/s99zfgIwWPfg9fT/XbAr831+pPynhNDRaUoFr93PGA3KmMFOarL8Fe9e
+DQZp4pIkaPsDfZtkqcUevdKpTRYf+98ZU9advk3Q+yDdyyTHuhTqTw91McglPJLc
+R6ckZ2N1uMPKdSXp7pVDBLE0X8VVLliCG4NL8ro2B4p1wBzUYXWHRm8arIzwTyWI
+c3RmnqcwrKoVHF3SabgUf0ALAtICYk3dR3lI5tYm8Bzkdk+b89JXZx/jkdHvRrx6
+kY9hX72aH2dJxdk1DzEbCw==<span style=color:#f92672>&lt;/dsig:SignatureValue&gt;</span>
+<span style=color:#f92672>&lt;dsig:KeyInfo&gt;</span>
+<span style=color:#f92672>&lt;dsig:X509Data&gt;</span>
+<span style=color:#f92672>&lt;dsig:X509Certificate&gt;</span>MIIDTjCCAjagAwIBAgIBATANBgkqhkiG9w0BAQUFADBRMRMwEQYDVQQKEwpEZWxs
+LCBJbmMuMSEwHwYDVQQLExhFbWJlZGRlZCBMaWNlbnNlIE1hbmFnZXIxFzAVBgNV
+BAMTDkNBIENlcnRpZmljYXRlMB4XDTEwMDEwMTAwMDAwMFoXDTM1MTIzMTIzNTk1
+OVowVjETMBEGA1UEChMKRGVsbCwgSW5jLjEhMB8GA1UECxMYRW1iZWRkZWQgTGlj
+ZW5zZSBNYW5hZ2VyMRwwGgYDVQQDExNTaWduaW5nIENlcnRpZmljYXRlMIIBIjAN
+BgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqbRo2DZtkjxl5YtqD5ePYdzrWbkU
+YQJwVaWYe1tE7ZAdou5TLTsjPnaa1cLcPTexn+cq8YjukIVwkwJP7yJ5GkrYGUnf
+0Q6unWWgwcgTStlpflz31e8AbxXqNYZEFvEktojYS0kAfiYES+H02GUU5PtV7B9Y
+BbtZEowU2DPuqRGG1FF8mAsp1vojcbQGx+nS2Of47oQJRrJlh28COXyf2w/+IRAz
+RmeYin+9pisfrT9fmlUtxa7sAAV/KZFRx8ED31YiktXgI/u/PNnHlchiCMaL6pzA
+HMBf115O7A2y6IZ9sXUHvH8V9QnDkWT1XHMn8GCW8HXOA5zA232OxiaRmQIDAQAB
+oywwKjAJBgNVHRMEAjAAMB0GA1UdDgQWBBQAoZ7yMjDHMAFtmmmO/zyz3BJ6hjAN
+BgkqhkiG9w0BAQUFAAOCAQEAHHgoOg57S+lAEejahdBE1HMwe6BF3b9bzUMCynn9
+7buXa3cnRFO3H3674WKU6nBjv4nkT3qMyXwgi7MvXcu69msK4eM6QA8XeC7G1rD+
+2bb/ENR9R9Zo0BWLym/ij8uUA/BzX8hnbzWxN82+FMdY9WD4fJAJwJ5ZPEbU1Vfy
+7wOWosHgDPXjeAhlhkxDQi6vlRTJdfED6tBY7iGD4AQXfzrHzAZpZlIvKbM2c54B
+65wMSlqfEWMBDhT5qcwGCq82hmi7/sCtu9Z20g2s9F0fp4XlGX8L7l0hCa46zjay
+37GffYsScEDFg/DmkIpcXnGzyx8l1msLzpj8Gt4zHhPlgA==<span style=color:#f92672>&lt;/dsig:X509Certificate&gt;</span>
+<span style=color:#f92672>&lt;/dsig:X509Data&gt;</span>
+<span style=color:#f92672>&lt;/dsig:KeyInfo&gt;</span>
+<span style=color:#f92672>&lt;/dsig:Signature&gt;&lt;/lns:LicenseClass&gt;</span>iDRAC7 Enterprise crack keygen
+</code></pre></td></tr></table></div></div><p>(This will change your Dell service tag, you won&rsquo;t get iDRAC7 enterprise without having this service tag, 9QYZF42)</p><p>find and download &ldquo;OMSA71-CentOS6-x86_64-LiveDVD.iso&rdquo;. It must be this older version, newer versions replaced a tool we want with a dumbed down version.</p><p>Boot into it from the server and launch gnome-terminal
+run these commands
+su
+smbios-sys-info &ndash;service-tag &ndash;set=9QYZF42
+reboot</p><p>You may notice some &ldquo;upgrading&rdquo; screens. This is normal</p><p><a href=https://www.reddit.com/r/homelab/comments/8xpbfv/ebay_idrac7_license/>https://www.reddit.com/r/homelab/comments/8xpbfv/ebay_idrac7_license/</a></p></div></section></body></html>
