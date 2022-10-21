@@ -1,0 +1,41 @@
+<!doctype html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><link href="https://fonts.loli.net/css?family=Ubuntu" rel=stylesheet><title>Proxmox VE</title><link rel=stylesheet href=/css/stylesheet.css></head><body><section id=page-title><h1><a href=/>Aliens</a></h1></section><section class=blog-post><h1>Proxmox VE</h1><div class=blog-post-subheader>October 21, 2022</div><div class=blog-post-content><h2 id=修改web登录的默认语言>修改Web登录的默认语言</h2><p>Proxmox VE 7.2.7</p><p>参考: <a href=https://forum.proxmox.com/threads/how-can-i-change-the-language-in-the-login-mask-to-default.11482/>https://forum.proxmox.com/threads/how-can-i-change-the-language-in-the-login-mask-to-default.11482/</a></p><div class=highlight><div style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>Hello, I know this is a very old subject, but I was looking for that option too, and manage to do it by just adding this in the
+/etc/pve/datacenter.cfg,
+under the &#34;keyboard: fr&#34; just add :
+language: fr
+save and restart the pveproxy.service.
+it did it for me!
+</code></pre></td></tr></table></div></div><p>我希望修改为中文，但不知道中文的代号，于是同样参考上面这篇文章:</p><div class=highlight><div style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">5
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">6
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>...
+cp /usr/share/pve-manager/locale/pve-lang-de.js /usr/share/pve-manager/locale/pve-lang-en.js
+cp /usr/share/pve-manager/ext4/locale/ext-lang-de.js /usr/share/pve-manager/ext4/locale/ext-lang-en.js
+cp /usr/share/pve-manager/ext4/locale/ext-lang-de.js /usr/share/pve-manager/ext4/locale/ext-lang-en_GB.js
+...
+Bye
+</code></pre></td></tr></table></div></div><p>但是pve7.2.7的语言文件的位置改到了<code>/usr/share/pve-i18n/</code>下</p><div class=highlight><div style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>$ ls /usr/share/pve-i18n/
+...
+pve-lang-da.js  pve-lang-eu.js  pve-lang-gl.js  pve-lang-it.js  pve-lang-nb.js  pve-lang-pl.js  pve-lang-sl.js     pve-lang-zh_CN.js
+</code></pre></td></tr></table></div></div><p>由此可知，简体中文的代号为<code>zh_CN</code>，于是修改<code>/etc/pve/datacenter.cfg</code>为：</p><div class=highlight><div style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">2
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">3
+</span><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">4
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>/etc/pve/datacenter.cfg
+-----
+keyboard: en-us
+language: zh_CN
+</code></pre></td></tr></table></div></div><p>最后重启<code>pveproxy</code>服务：</p><div class=highlight><div style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><table style=border-spacing:0;padding:0;margin:0;border:0;width:auto;overflow:auto;display:block><tr><td style=vertical-align:top;padding:0;margin:0;border:0><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code><span style="margin-right:.4em;padding:0 .4em;color:#7f7f7f">1
+</span></code></pre></td><td style=vertical-align:top;padding:0;margin:0;border:0;width:100%><pre style=color:#272822;background-color:#fafafa;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-fallback data-lang=fallback>service pveproxy restart
+</code></pre></td></tr></table></div></div></div></section></body></html>
